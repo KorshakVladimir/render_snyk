@@ -1,2 +1,2 @@
-# Array_Library
+# array_library
 Codebase for creation, alteration and maintetance n-dimensional story array.
