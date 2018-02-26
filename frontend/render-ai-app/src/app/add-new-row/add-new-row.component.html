@@ -1,0 +1,5 @@
+<!--<input type="text" [(ngModel)]="textValue">-->
+
+<textarea wrap="off" #new_data [(ngModel)]="textValue"> {{ textValue | json:4 }}</textarea>
+<p *ngIf="error_text" ngClass="error_text">{{ error_text }}</p>
+<input type="button" value="Save" ngClass="buttons" (click)=handle_save()>

@@ -1,0 +1,55 @@
+pre{
+  text-align: left;
+  position: relative;
+}
+
+.loading{
+  text-align: left;
+}
+
+.del_row{
+  position: absolute;
+  right: 10px;
+  top: 0px;
+  border: none;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  border-radius: 24px;
+  height: 30px;
+  width: 30px;
+  font-size: 20px;
+  padding-bottom: 5px;
+  cursor: pointer;
+  border: 1px solid
+}
+
+.export_row{
+  position: absolute;
+  right: 50px;
+  top: 0px;
+  border: 1px solid;
+  border-radius: 2px;
+  height: 30px;
+  width: 100px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.edit_row{
+  position: absolute;
+  right: 163px;
+  top: 0px;
+  border: 1px solid;
+  border-radius: 2px;
+  height: 30px;
+  width: 100px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.buttons{
+  border: 1px solid;
+  border-radius: 2px;
+  font-size: 13px;
+  cursor: pointer;
+}
