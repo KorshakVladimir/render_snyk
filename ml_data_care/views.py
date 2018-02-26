@@ -44,7 +44,7 @@ class MLDataView(View):
 
     @staticmethod
     def get(request):
-        res = list(MLData.objects.values_list("data", flat=True))
+        res = list(MLData.objects.values_list("data", flat=True)[0:100])
         return HttpJson(ujson.dumps(res, indent=4))
 
     def post(self, request):
