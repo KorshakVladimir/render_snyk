@@ -8,32 +8,21 @@ export class DataRowService {
 
   private base_url = '/api/';
   private module_base = 'ml_data/';
-  get_data_row(id: number | string) {
-    return this.http.get(`${this.base_url}${this.module_base}${id}/`);
-  }
 
-  save_data_row(id: number | string, formData) {
-    return this.http.post(`${this.base_url}${this.module_base}${id}/`, formData);
+  get_data_set(id) {
+      return this.http.get(`${this.base_url}${this.module_base}data_set/${id}`);
   }
-
   upload_file(formData: FormData) {
-    const req = new HttpRequest('POST', `${this.base_url}${this.module_base}main_data/`, formData);
-    return this.http.request(req);
+    return this.http.post(`${this.base_url}${this.module_base}main_data/`, formData);
   }
-
-  get_all_data() {
-    return this.http.get(`${this.base_url}${this.module_base}list/`);
+  all_data_sets() {
+    return this.http.get(`${this.base_url}${this.module_base}all_data_sets/`);
   }
-
-  add_new_row(formData) {
-    return this.http.post(`${this.base_url}${this.module_base}list/`, formData);
+  private company_base = 'company/';
+  create_company(formData) {
+      return this.http.post(`${this.base_url}${this.company_base}create/`, formData);
   }
-
-  del_row(cust_id) {
-    return this.http.delete(`${this.base_url}${this.module_base}${cust_id}/`, cust_id);
-  }
-
-  get_row_to_csv(cust_id) {
-    return this.http.post(`${this.base_url}${this.module_base}row_to_csv/${cust_id}/`, cust_id, {responseType: 'text'});
+  get_company_names() {
+      return this.http.get(`${this.base_url}${this.company_base}company_names/`);
   }
 }

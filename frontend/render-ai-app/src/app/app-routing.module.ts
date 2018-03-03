@@ -1,28 +1,34 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DataRowListComponent } from './data-row-list/data-row-list.component';
-import { DataRowPageComponent } from './data-row-page/data-row-page.component';
-import { AddNewRowComponent } from './add-new-row/add-new-row.component';
+import { AddCompanyComponent } from './add-company/add-company.component';
+import { NewDataSetComponent } from './new-data-set/new-data-set.component';
+import { DataSetEditComponent } from './data-set-edit/data-set-edit.component';
+import { MainPageComponent } from './main-page/main-page.component';
 
 const appRoutes: Routes = [
   {
-    path: 'cust_id/:id',
-    component: DataRowPageComponent
+    path: 'new_company',
+    component: AddCompanyComponent
   },
   {
-    path: 'add_new',
-    component: AddNewRowComponent
+    path: 'new_data_set',
+    component: NewDataSetComponent
   },
-  { path: '',  component: DataRowListComponent, },
-  // { path: '**', component: PageNotFoundComponent }
+  {
+    path: 'edit_data_set/:id',
+    component: DataSetEditComponent
+  },
+  { path: 'main_page',  component: MainPageComponent },
+  { path: '', redirectTo: 'main_page', pathMatch: 'full' },
+  { path: '**', redirectTo: 'main_page' }
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
+      // { enableTracing: true } // <-- debugging purposes only
     )
     // other imports here
   ],

@@ -1,4 +1,0 @@
-<p *ngIf="saved_successfully" ngClass="success">Data was saved</p>
-<textarea rows = {{cols_count}} wrap="off" #current_data> {{ data_row | json:4 }}</textarea>
-<p *ngIf="error_text" ngClass="error_text">{{ error_text }}</p>
-<input type="button" class="buttons" value="Save" (click)=handle_save(current_data)>

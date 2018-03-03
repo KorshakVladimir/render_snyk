@@ -13,39 +13,57 @@ from helpers.responce import HttpJson
 
 
 class LoadFileView(View):
-
     @staticmethod
-    def _save_row(first_row, row):
-        data = dict(zip(first_row, row))
-        customer_id = data["cust_ID"]
-        MLData.objects.update_or_create(customer_id=customer_id, data=data)
-        return data
-
-    def post(self, request):
+    def post(request):
         myfile = request.FILES['file']
+        post_data = request.POST
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
         relative_path = settings.MEDIA_ROOT + '/' + filename
         try:
-
             with open(relative_path, newline='') as csvfile:
-                filereader = csv.reader(csvfile, dialect='excel')
-                first_row = next(filereader)
-                first_row[0] = "cust_ID"
-                res = [self._save_row(first_row, row) for row in filereader]
+                file_reader = csv.reader(csvfile, dialect='excel')
+                first_row = next(file_reader)
+                ml_data, _ = MLData.objects.get_or_create(company_id=post_data["company"], name=post_data["name"])
+                data_set = [dict(zip(first_row, row)) for row in file_reader]
+                ml_data.data = data_set
+                ml_data.save()
         except Exception:
             return HttpResponseBadRequest("Error: %s" % sys.exc_info()[1])
         finally:
             fs.delete(relative_path)
-        return HttpJson(ujson.dumps(res))
+        return HttpJson(ujson.dumps({"id": ml_data.id}))
 
 
 class MLDataView(View):
 
     @staticmethod
     def get(request):
-        res = list(MLData.objects.values_list("data", flat=True)[0:100])
-        return HttpJson(ujson.dumps(res, indent=4))
+        res = []
+        data_sets = list(MLData.objects.values_list("company__name", "name", "id"))
+        tree = {}
+        for data_set in data_sets:
+            company = data_set[0]
+            ds_name = data_set[1]
+            id = data_set[2]
+            if company in tree:
+                tree[company].append({
+                    "label": ds_name,
+                    "data": id,
+                })
+            else:
+                tree[company] = [{
+                    "label": ds_name,
+                    "data": id,
+                }]
+
+        for tree_key, value in tree.items():
+            res.append({
+                "label": tree_key,
+                "data": tree_key,
+                "children": value
+            })
+        return HttpJson(ujson.dumps(res))
 
     def post(self, request):
         data = request.POST.get("data")
@@ -58,15 +76,15 @@ class MLDataView(View):
             return HttpResponseBadRequest("Cann`t save the data: %s" % sys.exc_info()[1])
 
 
-class MLDataRowView(View):
+class MLDataSetView(View):
 
-    def get(self, request, cust_id):
-        res = list(MLData.objects.filter(customer_id=cust_id))
-        if len(res):
-            data = res[0].data
-            return HttpJson(ujson.dumps(data, indent=4))
-        else:
-            return HttpJson(ujson.dumps(['row %d not found' % cust_id]))
+    def get(self, request, pk):
+        try:
+            res = MLData.objects.get(id=pk)
+            data = res.data
+            return HttpJson(ujson.dumps(data))
+        except Exception:
+            return HttpJson(ujson.dumps(['Data set with `pk` %d not found' % pk]))
 
     def post(self, request, cust_id):
         res = list(MLData.objects.filter(customer_id=cust_id))
@@ -82,7 +100,7 @@ class MLDataRowView(View):
                     return HttpResponseBadRequest("cust_ID must much to id in URL")
                 curr_data.data = data_as_object
                 curr_data.save()
-                return HttpResponse(parsed_data, content_type="text/json")
+                return HttpJson(parsed_data)
             except ValueError:
                 return HttpResponseBadRequest("Not valid json: %s" % sys.exc_info()[1])
         else:

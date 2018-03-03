@@ -1,9 +1,14 @@
+
+from django.contrib.postgres.fields import JSONField, ArrayField
 from django.db import models
 
-from django.contrib.postgres.fields import JSONField
-from django.db import models
+from company_management.models import Company
 
 
 class MLData(models.Model):
-    customer_id = models.IntegerField(default=0, unique=True)
-    data = JSONField()
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    name = models.TextField(blank=False)
+    data = JSONField(blank=True, null=True)
+
+    class Meta:
+        unique_together = ("company", "name")
