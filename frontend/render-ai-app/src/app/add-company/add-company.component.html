@@ -1,0 +1,5 @@
+<h1>Create New Company</h1>
+<label for="">Name:</label>
+<input [(ngModel)]="company_name">
+<div *ngIf="form_error">{{ form_error | json }}</div>
+<input type="button" value="Create" (click)="create_new()">

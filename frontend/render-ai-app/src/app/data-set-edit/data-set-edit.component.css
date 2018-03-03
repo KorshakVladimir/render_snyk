@@ -1,0 +1,18 @@
+.data_set_table table{
+    width: 1000%;
+}
+.ui-datatable .ui-datatable-thead>tr>th, .ui-datatable .ui-datatable-tfoot>tr>td, .ui-datatable .ui-datatable-data>tr>td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 1%;
+}
+
+.ui-datatable .ui-paginator-bottom{
+    position: fixed;
+}
+
+.main_block{
+    width: 100%;
+    overflow: scroll;
+}

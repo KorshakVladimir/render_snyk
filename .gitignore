@@ -14,3 +14,7 @@ __pycache__/
 ._*
 
 .idea
+
+front_end
+node_modules/
+media/

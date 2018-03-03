@@ -1,0 +1,15 @@
+
+<div ngClass="main_block">
+    <p-dataTable #dt [value]="data_set" [rows]="10"
+              [paginator]="true" [pageLinks]="3"
+              [rowsPerPageOptions]="[5,10,20]"
+              styleClass="data_set_table"
+              [editable]="true"
+              resizableColumns="true"
+>
+    <p-column *ngFor="let col of cols" [field]="col" [header]="col" [editable]="true"></p-column>
+    <ng-template pTemplate="paginatorRight">
+        <button type="button" pButton icon="fa-cloud-upload" (click)="upload(dt)"></button>
+    </ng-template>
+</p-dataTable>
+</div>
