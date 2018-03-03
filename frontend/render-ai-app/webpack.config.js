@@ -110,7 +110,7 @@ const postcssPlugins = function (loader) {
             PostcssCliResources({
                 deployUrl: loader.loaders[loader.loaderIndex].options.ident == 'extracted' ? '' : deployUrl,
                 loader,
-                filename: `[name]${hashFormat.file}.[ext]`,
+                filename: `static/[name]${hashFormat.file}.[ext]`,
             }),
             autoprefixer({ grid: true }),
         ];
@@ -160,7 +160,7 @@ module.exports = {
   },
   "output": {
     "path": path.join(process.cwd(), "dist"),
-    "filename": "[name].bundle.js",
+    "filename": "static/[name].bundle.js",
     "chunkFilename": "[id].chunk.js",
     "crossOriginLoading": false
   },
