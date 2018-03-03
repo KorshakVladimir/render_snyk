@@ -536,6 +536,12 @@ module.exports = {
     "setImmediate": false
   },
   "devServer": {
-    "historyApiFallback": true
+    "historyApiFallback": true,
+    proxy: {
+        "/api": {
+            "target": "http://localhost:8000/",
+            "secure": false
+        }
+    },
   }
 };
