@@ -153,9 +153,9 @@ module.exports = {
     ],
     "styles": [
       "./node_modules/font-awesome/css/font-awesome.min.css",
-      "./node_modules/primeng/resources/themes/omega/theme.css",
-      "./node_modules/primeng/resources/primeng.min.css",
-      "./src/styles.css"
+      "./assets/primeng/kasper/theme.scss",
+      "./assets/primeng/primeng.css",
+      "./assets/styles/main.scss"
     ]
   },
   "output": {
@@ -189,9 +189,7 @@ module.exports = {
       {
         "exclude": [
           path.join(process.cwd(), "node_modules/font-awesome/css/font-awesome.min.css"),
-          path.join(process.cwd(), "node_modules/primeng/resources/themes/omega/theme.css"),
-          path.join(process.cwd(), "node_modules/primeng/resources/primeng.min.css"),
-          path.join(process.cwd(), "src/styles.css")
+          path.join(process.cwd(), "assets/primeng/primeng.css"),
         ],
         "test": /\.css$/,
         "use": [
@@ -210,10 +208,8 @@ module.exports = {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "node_modules/font-awesome/css/font-awesome.min.css"),
-          path.join(process.cwd(), "node_modules/primeng/resources/themes/omega/theme.css"),
-          path.join(process.cwd(), "node_modules/primeng/resources/primeng.min.css"),
-          path.join(process.cwd(), "src/styles.css")
+          path.join(process.cwd(), "assets/primeng/kasper/theme.scss"),
+          path.join(process.cwd(), "assets/styles/main.scss")
         ],
         "test": /\.scss$|\.sass$/,
         "use": [
@@ -239,68 +235,9 @@ module.exports = {
         ]
       },
       {
-        "exclude": [
-          path.join(process.cwd(), "node_modules/font-awesome/css/font-awesome.min.css"),
-          path.join(process.cwd(), "node_modules/primeng/resources/themes/omega/theme.css"),
-          path.join(process.cwd(), "node_modules/primeng/resources/primeng.min.css"),
-          path.join(process.cwd(), "src/styles.css")
-        ],
-        "test": /\.less$/,
-        "use": [
-          {
-            "loader": "raw-loader"
-          },
-          {
-            "loader": "postcss-loader",
-            "options": {
-              "ident": "embedded",
-              "plugins": postcssPlugins,
-              "sourceMap": true
-            }
-          },
-          {
-            "loader": "less-loader",
-            "options": {
-              "sourceMap": true
-            }
-          }
-        ]
-      },
-      {
-        "exclude": [
-          path.join(process.cwd(), "node_modules/font-awesome/css/font-awesome.min.css"),
-          path.join(process.cwd(), "node_modules/primeng/resources/themes/omega/theme.css"),
-          path.join(process.cwd(), "node_modules/primeng/resources/primeng.min.css"),
-          path.join(process.cwd(), "src/styles.css")
-        ],
-        "test": /\.styl$/,
-        "use": [
-          {
-            "loader": "raw-loader"
-          },
-          {
-            "loader": "postcss-loader",
-            "options": {
-              "ident": "embedded",
-              "plugins": postcssPlugins,
-              "sourceMap": true
-            }
-          },
-          {
-            "loader": "stylus-loader",
-            "options": {
-              "sourceMap": true,
-              "paths": []
-            }
-          }
-        ]
-      },
-      {
         "include": [
           path.join(process.cwd(), "node_modules/font-awesome/css/font-awesome.min.css"),
-          path.join(process.cwd(), "node_modules/primeng/resources/themes/omega/theme.css"),
-          path.join(process.cwd(), "node_modules/primeng/resources/primeng.min.css"),
-          path.join(process.cwd(), "src/styles.css")
+          path.join(process.cwd(), "assets/primeng/primeng.css"),
         ],
         "test": /\.css$/,
         "use": [
@@ -320,10 +257,8 @@ module.exports = {
       },
       {
         "include": [
-          path.join(process.cwd(), "node_modules/font-awesome/css/font-awesome.min.css"),
-          path.join(process.cwd(), "node_modules/primeng/resources/themes/omega/theme.css"),
-          path.join(process.cwd(), "node_modules/primeng/resources/primeng.min.css"),
-          path.join(process.cwd(), "src/styles.css")
+          path.join(process.cwd(), "assets/primeng/kasper/theme.scss"),
+          path.join(process.cwd(), "assets/styles/main.scss")
         ],
         "test": /\.scss$|\.sass$/,
         "use": [
@@ -345,65 +280,6 @@ module.exports = {
               "sourceMap": true,
               "precision": 8,
               "includePaths": []
-            }
-          }
-        ]
-      },
-      {
-        "include": [
-          path.join(process.cwd(), "node_modules/font-awesome/css/font-awesome.min.css"),
-          path.join(process.cwd(), "node_modules/primeng/resources/themes/omega/theme.css"),
-          path.join(process.cwd(), "node_modules/primeng/resources/primeng.min.css"),
-          path.join(process.cwd(), "src/styles.css")
-        ],
-        "test": /\.less$/,
-        "use": [
-          "style-loader",
-          {
-            "loader": "raw-loader"
-          },
-          {
-            "loader": "postcss-loader",
-            "options": {
-              "ident": "embedded",
-              "plugins": postcssPlugins,
-              "sourceMap": true
-            }
-          },
-          {
-            "loader": "less-loader",
-            "options": {
-              "sourceMap": true
-            }
-          }
-        ]
-      },
-      {
-        "include": [
-          path.join(process.cwd(), "node_modules/font-awesome/css/font-awesome.min.css"),
-          path.join(process.cwd(), "node_modules/primeng/resources/themes/omega/theme.css"),
-          path.join(process.cwd(), "node_modules/primeng/resources/primeng.min.css"),
-          path.join(process.cwd(), "src/styles.css")
-        ],
-        "test": /\.styl$/,
-        "use": [
-          "style-loader",
-          {
-            "loader": "raw-loader"
-          },
-          {
-            "loader": "postcss-loader",
-            "options": {
-              "ident": "embedded",
-              "plugins": postcssPlugins,
-              "sourceMap": true
-            }
-          },
-          {
-            "loader": "stylus-loader",
-            "options": {
-              "sourceMap": true,
-              "paths": []
             }
           }
         ]

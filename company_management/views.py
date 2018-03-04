@@ -6,6 +6,7 @@ from django.views import View
 
 from company_management.models import Company
 from helpers.responce import HttpJson
+from . forms import NewCompanyForm
 
 
 class CompanyView(View):
@@ -19,11 +20,11 @@ class CompanyView(View):
     @staticmethod
     def post(request):
         data = request.POST
-        try:
-            current_company = Company.objects.create(name=data["name"])
-        except Exception:
-            return HttpResponseBadRequest("Error: %s" % sys.exc_info()[1])
-
+        form = NewCompanyForm(data)
+        if form.is_valid():
+            current_company = form.save()
+        else:
+            return HttpResponseBadRequest(form.errors.as_json())
         return HttpJson(ujson.dumps({"name": current_company.name}))
 
     @staticmethod

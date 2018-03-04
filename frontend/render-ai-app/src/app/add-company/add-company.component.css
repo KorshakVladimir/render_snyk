@@ -1,0 +1,12 @@
+.component_body{
+    width: 300px;
+    margin:100px auto;
+    background: #fff;
+    padding: 10px;
+}
+.to-right{
+    float: right;
+}
+h3 {
+    text-align: center;
+}

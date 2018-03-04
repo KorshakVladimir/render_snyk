@@ -10,10 +10,10 @@ import {PrettyJsonModule} from 'angular2-prettyjson';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 // PrimeNG
-import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { TreeModule } from 'primeng/tree';
+import { MenubarModule } from 'primeng/menubar';
 
 import { DataTableModule } from 'primeng/datatable';
 
@@ -26,18 +26,22 @@ import { AddCompanyComponent } from './add-company/add-company.component';
 import { NewDataSetComponent } from './new-data-set/new-data-set.component';
 import { DataSetEditComponent } from './data-set-edit/data-set-edit.component';
 import { MainPageComponent } from './main-page/main-page.component';
+import { FormFieldErrorComponent } from './form-field-error/form-field-error.component';
 
 @NgModule({
   declarations: [
+
     AppComponent,
     MainMenuComponent,
     AddCompanyComponent,
     NewDataSetComponent,
-    DataSetEditComponent, MainPageComponent,
+    DataSetEditComponent,
+    MainPageComponent,
+    FormFieldErrorComponent,
   ],
   imports: [
     // PrimeNG
-    ToolbarModule,
+    MenubarModule,
     ButtonModule,
     DropdownModule,
     DataTableModule,

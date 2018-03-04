@@ -1,5 +1,20 @@
-<h1>Create New Company</h1>
-<label for="">Name:</label>
-<input [(ngModel)]="company_name">
-<div *ngIf="form_error">{{ form_error | json }}</div>
-<input type="button" value="Create" (click)="create_new()">
+<div ngClass="component_body">
+    <form action="" ngClass="add_company_form" #company_form="ngForm">
+        <h3>Create New Company</h3>
+        <div class="form_group">
+            <label for="name">Name:</label>
+            <input [(ngModel)]="model.name" name="name" id="name" required="" #name="ngModel"
+                   ngClass="form-control"
+            >
+            <div [hidden]="name.valid || name.pristine" class="form_error">
+                Name is required
+            </div>
+            <app-form-field-error [errors]="server_error" [name]='name' >
+            </app-form-field-error>
+        </div>
+        <button pButton  class="to-right" type="button " (click)="create_new()" label="Create">
+        </button>
+        <br>
+        <br>
+    </form>
+</div>
