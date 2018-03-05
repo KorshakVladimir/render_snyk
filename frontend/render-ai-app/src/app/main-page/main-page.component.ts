@@ -41,7 +41,9 @@ export class MainPageComponent implements OnInit {
         );
   }
   select_data_set() {
+      if (Object.keys(this.selected_set).indexOf('children') > -1 ) {
+          return;
+      }
       this.router.navigate(['/edit_data_set', this.selected_set.data]);
-      console.log(this.selected_set);
   }
 }

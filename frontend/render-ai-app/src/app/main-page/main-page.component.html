@@ -1,3 +1,8 @@
-<p-tree [value]="data_sets_tree" selectionMode="single" [(selection)]="selected_set"
-        (onNodeSelect)="select_data_set()"
-></p-tree>
+<div ngClass="content">
+    <div ngClass="content_title">
+        Company/Data set
+    </div>
+    <p-tree [value]="data_sets_tree" selectionMode="single" [(selection)]="selected_set"
+            (onNodeSelect)="select_data_set()"
+    ></p-tree>
+</div>
