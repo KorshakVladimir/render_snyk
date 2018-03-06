@@ -12,7 +12,9 @@
             <app-form-field-error [errors]="server_error" [name]='name' >
             </app-form-field-error>
         </div>
-        <button pButton  class="to-right" type="button " (click)="create_new()" label="Create">
+        <button pButton  class="to-right" type="button "
+                [disabled]="!company_form.form.valid"
+                (click)="create_new()" label="Create">
         </button>
         <br>
         <br>

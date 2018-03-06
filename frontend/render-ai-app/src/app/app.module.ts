@@ -14,6 +14,7 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { TreeModule } from 'primeng/tree';
 import { MenubarModule } from 'primeng/menubar';
+import { FileUploadModule } from 'primeng/fileupload';
 
 import { DataTableModule } from 'primeng/datatable';
 
@@ -46,6 +47,7 @@ import { FormFieldErrorComponent } from './form-field-error/form-field-error.com
     DropdownModule,
     DataTableModule,
     TreeModule,
+    FileUploadModule,
     // -------
     BrowserAnimationsModule,
     BrowserModule,

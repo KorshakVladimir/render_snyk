@@ -7,31 +7,37 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from django.conf import settings
 from . models import MLData
+from . forms import NewDataSetForm
+
 import ujson
 
 from helpers.responce import HttpJson
 
 
-class LoadFileView(View):
+class CreateDataSet(View):
     @staticmethod
     def post(request):
-        myfile = request.FILES['file']
+        myfile = request.FILES.get('file', '')
         post_data = request.POST
-        fs = FileSystemStorage()
-        filename = fs.save(myfile.name, myfile)
-        relative_path = settings.MEDIA_ROOT + '/' + filename
-        try:
-            with open(relative_path, newline='') as csvfile:
-                file_reader = csv.reader(csvfile, dialect='excel')
-                first_row = next(file_reader)
-                ml_data, _ = MLData.objects.get_or_create(company_id=post_data["company"], name=post_data["name"])
-                data_set = [dict(zip(first_row, row)) for row in file_reader]
-                ml_data.data = data_set
-                ml_data.save()
-        except Exception:
-            return HttpResponseBadRequest("Error: %s" % sys.exc_info()[1])
-        finally:
-            fs.delete(relative_path)
+        data_set = NewDataSetForm(post_data)
+        if not data_set.is_valid():
+            return HttpResponseBadRequest(data_set.errors.as_json())
+        ml_data = data_set.save()
+        if myfile:
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            relative_path = settings.MEDIA_ROOT + '/' + filename
+            try:
+                with open(relative_path, newline='') as csvfile:
+                    file_reader = csv.reader(csvfile, dialect='excel')
+                    first_row = next(file_reader)
+                    data_set = [dict(zip(first_row, row)) for row in file_reader]
+                    ml_data.data = data_set
+                    ml_data.save()
+            except Exception:
+                return HttpResponseBadRequest(ujson.dumps({'file_to_load': sys.exc_info()[1]}))
+            finally:
+                fs.delete(relative_path)
         return HttpJson(ujson.dumps({"id": ml_data.id}))
 
 

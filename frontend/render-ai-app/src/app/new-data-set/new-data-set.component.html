@@ -1,12 +1,54 @@
-<label>Select a company:</label>
-<p-dropdown [options]="companies" [(ngModel)]="selectedCompany"
-            placeholder="Select a Company" optionLabel="name"
-></p-dropdown>
-<label for="">New Data Sets Name:</label>
-<input [(ngModel)]="data_set_name">
-<form action="">
-    <div>
-        <label> Load CSV file with data:  </label>
-        <input type="file" (change)="fileChange($event)" id="file_to_load"  placeholder="Upload file" accept=".csv">
+<div ngClass="content">
+    <div ngClass="content_title">
+        Create New Data Set
     </div>
-</form>
+    <div ngClass="content_body">
+        <form action="" ngClass="add_data_set_form" #data_set_form="ngForm"  (ngSubmit)="onSubmit()">
+            <div class="form_group">
+                <label for="name">Name:</label>
+                <input [(ngModel)]="model.name" name="name" id="name" required="" #name="ngModel"
+                       ngClass="form-control" required=""
+                >
+                <div [hidden]="name.valid || name.pristine" class="form_error">
+                    Name is required
+                </div>
+                <app-form-field-error [errors]="server_error" [name]='name' >
+                </app-form-field-error>
+            </div>
+            <div class="form_group">
+                <label for="company">Select a company:</label>
+                <p-dropdown [options]="companies"
+                            placeholder="Select a Company" optionLabel="name"
+                            styleClass="new_company_select"
+                            [(ngModel)]="model.company"
+                            name="company"
+                            id="company"
+                            #company="ngModel"
+                            required=""
+                ></p-dropdown>
+                <div [hidden]="company.valid || company.pristine" class="form_error">
+                    Company is required
+                </div>
+                <app-form-field-error [errors]="server_error" [name]='company' >
+                </app-form-field-error>
+            </div>
+            <div class="form_group">
+                <label for="file_to_load">Load CSV file with data:</label>
+                <p-fileUpload name="myfile[]"
+                              files="files" customUpload="True" (uploadHandler)="get_files($event)"
+                              accept=".csv" auto="auto"
+                              id="file_to_load"
+                              styleClass="new_company_file_upload"
+                ></p-fileUpload>
+                <app-form-field-error [errors]="server_error" [name]='{"name": "file_to_load"}' >
+                </app-form-field-error>
+            </div>
+            <app-form-field-error [errors]="server_error" [name]='{"name": "__all__"}' >
+            </app-form-field-error>
+            <button pButton  class="to-right" label="Create" [disabled]="!data_set_form.form.valid">
+            </button>
+            <br>
+            <br>
+        </form>
+    </div>
+</div>

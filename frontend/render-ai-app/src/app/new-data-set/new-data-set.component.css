@@ -1,0 +1,16 @@
+.new_company_select.ui-dropdown{
+    display: block;
+    height: 30px;
+}
+.new_company_select.ui-dropdown .ui-dropdown-label{
+    height: 28px;
+}
+.new_company_file_upload .ui-fileupload-buttonbar{
+    background: #fff;
+    border-color: #fff;
+    padding: 0px;
+}
+
+.content{
+    width: 400px;
+}
