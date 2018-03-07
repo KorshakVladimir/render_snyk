@@ -5,6 +5,6 @@ export class DataSetModels {
     public id: number,
     public name: string,
     public company: Company,
-    public data: Array<object>,
+    public data?: Array<object>,
   ) {  }
 }

@@ -1,15 +1,64 @@
+<p-tabView styleClass="data_set_tabs">
+    <p-tabPanel header="Data Set">
+       <p-table [columns]="cols"
+                [value]="model.data"
+                [paginator]="true"
+                [rows]="50"
+                styleClass="data_set_table"
+                [scrollable]="true" [style]="{width:'100%'}" scrollHeight="{{scroll_height}}"
+                #dt
+                [resizableColumns]="true"
+                [loading]="loading"
+       >
+           <ng-template pTemplate="caption">
 
-<div ngClass="main_block">
-    <p-dataTable #dt [value]="data_set" [rows]="10"
-              [paginator]="true" [pageLinks]="3"
-              [rowsPerPageOptions]="[5,10,20]"
-              styleClass="data_set_table"
-              [editable]="true"
-              resizableColumns="true"
->
-    <p-column *ngFor="let col of cols" [field]="col" [header]="col" [editable]="true"></p-column>
-    <ng-template pTemplate="paginatorRight">
-        <button type="button" pButton icon="fa-cloud-upload" (click)="upload(dt)"></button>
-    </ng-template>
-</p-dataTable>
-</div>
+               <div ngClass="table_multiselect">
+                   <p-multiSelect [options]="cols"
+                                  [(ngModel)]="selectedColumns"
+                                  selectedItemsLabel="{0} columns selected"
+                                  [style]="{minWidth: '200px'}"
+                                  defaultLabel="Choose Columns"
+                                  optionLabel="name"
+                   ></p-multiSelect>
+               </div>
+               <div class="ui-helper-clearfix export_csv">
+                   <button type="button" pButton icon="fa-file-o" iconPos="left"
+                           label="Export to CSV" (click)="dt.exportCSV()"
+                   ></button>
+               </div>
+           </ng-template>
+           <ng-template pTemplate="colgroup" let-columns>
+               <colgroup>
+                   <col *ngFor="let col of selectedColumns" style="width:250px" >
+               </colgroup>
+           </ng-template>
+           <ng-template pTemplate="header" let-columns >
+               <tr>
+                   <th *ngFor="let col of selectedColumns" pResizableColumn>
+                       {{ col.name }}
+                   </th>
+               </tr>
+           </ng-template>
+           <ng-template pTemplate="body" let-rowData let-columns="columns">
+               <tr>
+                   <td *ngFor="let col of selectedColumns" pEditableColumn>
+                       <p-cellEditor>
+                           <ng-template pTemplate="input">
+                               <input type="text" #cell [(ngModel)]="rowData[col.name]"
+                                      (change)="handleEdit(cell.value, col.name, rowData)" >
+                           </ng-template>
+                           <ng-template pTemplate="output">
+                               {{rowData[col.name]}}
+                           </ng-template>
+                       </p-cellEditor>
+                   </td>
+               </tr>
+           </ng-template>
+       </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="Properties">
+        <app-data-set-form (formSubmit)="save_data_set(model)" [model]="model" [server_error]="server_error">
+        </app-data-set-form>
+    </p-tabPanel>
+</p-tabView>
+

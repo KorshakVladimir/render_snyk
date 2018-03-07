@@ -2,7 +2,7 @@
     <div ngClass="content_title">
         Company/Data set
     </div>
-    <p-tree [value]="data_sets_tree" selectionMode="single" [(selection)]="selected_set"
+    <p-tree *ngIf="data_sets_tree.length>0" [value]="data_sets_tree" selectionMode="single" [(selection)]="selected_set"
             (onNodeSelect)="select_data_set()"
     ></p-tree>
 </div>

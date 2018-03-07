@@ -11,7 +11,7 @@ from . forms import NewCompanyForm
 
 class CompanyView(View):
     @staticmethod
-    def get(request):
+    def get(request, pk):
         current_company = Company.objects.filter(pk=pk)
         if not current_company:
             return HttpResponseBadRequest("Company with id: %d  not found" % pk)

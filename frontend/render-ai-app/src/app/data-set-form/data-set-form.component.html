@@ -1,0 +1,53 @@
+<form action="" ngClass="add_data_set_form" #data_set_form="ngForm"  (ngSubmit)="handleSubmit(upLoader);">
+    <div class="form_group">
+        <label for="name">Name:</label>
+        <input [(ngModel)]="model.name" name="name" id="name" required="" #name="ngModel"
+               ngClass="form-control" required=""
+        >
+        <div [hidden]="name.valid || name.pristine" class="form_error">
+            Name is required
+        </div>
+        <app-form-field-error [errors]="server_error" [name]='name' >
+        </app-form-field-error>
+    </div>
+    <div class="form_group">
+        <label for="company">Select a company:</label>
+        <p-dropdown [options]="companies"
+                    placeholder="Select a Company" optionLabel="name"
+                    styleClass="company_select"
+                    [(ngModel)]="model.company"
+                    name="company"
+                    id="company"
+                    #company="ngModel"
+                    required=""
+                    [style]="{width:'100%'}"
+                    [filter]="true"
+        ></p-dropdown>
+        <div [hidden]="company.valid || company.pristine" class="form_error">
+            Company is required
+        </div>
+        <app-form-field-error [errors]="server_error" [name]='company' >
+        </app-form-field-error>
+    </div>
+    <div class="form_group">
+        <label for="file_to_load">Load CSV file with data:</label>
+        <p-fileUpload name="myfile[]"
+                      files="files"
+                      customUpload="True"
+                      (uploadHandler)="get_files($event)"
+                      accept=".csv"
+                      auto="auto"
+                      id="file_to_load"
+                      styleClass="new_company_file_upload"
+                      #upLoader
+        ></p-fileUpload>
+        <app-form-field-error [errors]="server_error" [name]='{"name": "file_to_load"}' >
+        </app-form-field-error>
+    </div>
+    <app-form-field-error [errors]="server_error" [name]='{"name": "__all__"}' >
+    </app-form-field-error>
+    <button pButton  class="to-right" label="Save" [disabled]="!data_set_form.form.valid">
+    </button>
+    <br>
+    <br>
+</form>

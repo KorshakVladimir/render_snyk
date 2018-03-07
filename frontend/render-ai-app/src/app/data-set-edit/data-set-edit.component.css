@@ -1,18 +1,65 @@
-.data_set_table table{
-    width: 1000%;
-}
-.ui-datatable .ui-datatable-thead>tr>th, .ui-datatable .ui-datatable-tfoot>tr>td, .ui-datatable .ui-datatable-data>tr>td {
+.data_set_table .ui-table .ui-table-thead > tr > th,
+.ui-table .ui-table-tbody > tr > td,
+.ui-table .ui-table-tfoot > tr > td{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 1%;
+    border: 1px solid #ddd;
+}
+.ui-table .ui-table-thead > tr > th{
+    font-size: 13px;
+    color: #676a6c;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #ddd;
+    background: #eef1f4;
 }
 
-.ui-datatable .ui-paginator-bottom{
-    position: fixed;
+.ui-table .ui-paginator-bottom{
+    /*position: fixed;*/
+    /*width: 100%;*/
+    /*bottom: 0px;*/
+    margin-top: 7px;
+    margin-bottom: -5px;
 }
-
 .main_block{
     width: 100%;
     overflow: scroll;
+}
+.data_set_tabs.ui-tabview{
+    background: transparent;
+    border: 0;
+}
+.data_set_tabs.ui-tabview.ui-tabview-top > .ui-tabview-nav{
+    background: transparent;
+    padding: 0px;
+}
+
+.data_set_tabs .ui-tabview-panels{
+    background: #fff;
+    border: 1px solid #ddd;
+}
+.data_set_tabs.ui-tabview.ui-tabview-top > .ui-tabview-nav li.ui-state-active{
+    border-bottom: 1px solid #fff;
+    background: #fff;
+}
+.data_set_tabs.ui-tabview.ui-tabview-top > .ui-tabview-nav li{
+    top: 2px;
+    background: transparent;
+}
+
+.data_set_table .table_multiselect{
+    float: left;
+    text-align: left;
+}
+.export_csv .ui-button{
+    margin-top: 0px;
+    margin-left: 10px;
+}
+.ui-multiselect-label-container{
+    padding: 3px;
+}
+.data_set_table .ui-table-caption{
+    padding-left: 0px;
 }

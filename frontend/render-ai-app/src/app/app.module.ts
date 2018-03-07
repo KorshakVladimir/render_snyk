@@ -15,8 +15,9 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TreeModule } from 'primeng/tree';
 import { MenubarModule } from 'primeng/menubar';
 import { FileUploadModule } from 'primeng/fileupload';
-
-import { DataTableModule } from 'primeng/datatable';
+import { TableModule } from 'primeng/table';
+import { TabViewModule } from 'primeng/tabview';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 import { AppComponent } from './app.component';
 import { RoutingModule } from './app-routing.module';
@@ -28,6 +29,7 @@ import { NewDataSetComponent } from './new-data-set/new-data-set.component';
 import { DataSetEditComponent } from './data-set-edit/data-set-edit.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { FormFieldErrorComponent } from './form-field-error/form-field-error.component';
+import { DataSetFormComponent } from './data-set-form/data-set-form.component';
 
 @NgModule({
   declarations: [
@@ -39,15 +41,18 @@ import { FormFieldErrorComponent } from './form-field-error/form-field-error.com
     DataSetEditComponent,
     MainPageComponent,
     FormFieldErrorComponent,
+    DataSetFormComponent,
   ],
   imports: [
     // PrimeNG
     MenubarModule,
     ButtonModule,
     DropdownModule,
-    DataTableModule,
+    TableModule,
     TreeModule,
     FileUploadModule,
+    TabViewModule,
+    MultiSelectModule,
     // -------
     BrowserAnimationsModule,
     BrowserModule,

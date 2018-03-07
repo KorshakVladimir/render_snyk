@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent implements OnInit {
-  public data_sets_tree;
+  public data_sets_tree: Array<object> = [];
   public selected_set;
 
   constructor(
@@ -29,7 +29,7 @@ export class MainPageComponent implements OnInit {
   }
   all_data_sets() {
     this.service.all_data_sets().subscribe(
-        res => {
+        (res: Array<object>)  => {
             this.data_sets_tree = res;
             setTimeout(() => {
                 this.data_sets_tree.forEach( node => {

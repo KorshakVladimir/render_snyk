@@ -14,33 +14,6 @@ import ujson
 from helpers.responce import HttpJson
 
 
-class CreateDataSet(View):
-    @staticmethod
-    def post(request):
-        myfile = request.FILES.get('file', '')
-        post_data = request.POST
-        data_set = NewDataSetForm(post_data)
-        if not data_set.is_valid():
-            return HttpResponseBadRequest(data_set.errors.as_json())
-        ml_data = data_set.save()
-        if myfile:
-            fs = FileSystemStorage()
-            filename = fs.save(myfile.name, myfile)
-            relative_path = settings.MEDIA_ROOT + '/' + filename
-            try:
-                with open(relative_path, newline='') as csvfile:
-                    file_reader = csv.reader(csvfile, dialect='excel')
-                    first_row = next(file_reader)
-                    data_set = [dict(zip(first_row, row)) for row in file_reader]
-                    ml_data.data = data_set
-                    ml_data.save()
-            except Exception:
-                return HttpResponseBadRequest(ujson.dumps({'file_to_load': sys.exc_info()[1]}))
-            finally:
-                fs.delete(relative_path)
-        return HttpJson(ujson.dumps({"id": ml_data.id}))
-
-
 class MLDataView(View):
 
     @staticmethod
@@ -85,51 +58,78 @@ class MLDataView(View):
 class MLDataSetView(View):
 
     def get(self, request, pk):
+        context = {}
         try:
-            res = MLData.objects.get(id=pk)
-            data = res.data
-            return HttpJson(ujson.dumps(data))
+            # todo: rewrite for one query
+            ml_data = MLData.objects.get(id=pk)
+            context["name"] = ml_data.name
+            context["company"] = {"id": ml_data.company_id, "name": ml_data.company.name}
+            context["data"] = ml_data.data
+            return HttpJson(ujson.dumps(context))
         except Exception:
-            return HttpJson(ujson.dumps(['Data set with `pk` %d not found' % pk]))
+            return HttpResponseBadRequest(ujson.dumps(['Data set with `pk` %d not found' % pk]))
 
-    def post(self, request, cust_id):
-        res = list(MLData.objects.filter(customer_id=cust_id))
-        if len(res):
+    @staticmethod
+    def _create_update_data_set(file, req_data, pk=0):
+
+        if pk:
             try:
-                curr_data = res[0]
-                data = request.POST.get("data")
-                parsed_data = "".join(data.split("\r\n   "))
-                data_as_object = ujson.loads(parsed_data)
-                if "cust_ID" not in data_as_object:
-                    return HttpResponseBadRequest("cust_ID is required key")
-                elif int(data_as_object["cust_ID"]) != cust_id:
-                    return HttpResponseBadRequest("cust_ID must much to id in URL")
-                curr_data.data = data_as_object
-                curr_data.save()
-                return HttpJson(parsed_data)
-            except ValueError:
-                return HttpResponseBadRequest("Not valid json: %s" % sys.exc_info()[1])
+                instance = MLData.objects.get(pk=pk)
+                data_set = NewDataSetForm(req_data, instance=instance)
+            except Exception:
+                return HttpResponseBadRequest(ujson.dumps(['Data set with `pk` %d not found' % pk]))
         else:
-            return HttpJson(ujson.dumps(['row %d not found' % cust_id]))
+            data_set = NewDataSetForm(req_data)
+
+        if not data_set.is_valid():
+            return HttpResponseBadRequest(data_set.errors.as_json())
+        ml_data = data_set.save()
+        if file:
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
+            relative_path = settings.MEDIA_ROOT + '/' + filename
+            try:
+                with open(relative_path, newline='') as csvfile:
+                    file_reader = csv.reader(csvfile, dialect='excel')
+                    first_row = next(file_reader)
+                    row_index = 1
+                    data_set_data = []
+                    for row in file_reader:
+                        data_dict = dict(zip(first_row, row))
+                        data_dict["row_index"] = row_index
+                        data_set_data.append(data_dict)
+                        row_index += 1
+                    ml_data.data = data_set_data
+                    ml_data.save()
+            except Exception:
+                return HttpResponseBadRequest(ujson.dumps({'file_to_load': sys.exc_info()[1]}))
+            finally:
+                fs.delete(relative_path)
+        return HttpJson(ujson.dumps({"data": ml_data.data, "id": ml_data.id}))
+
+    def post(self, request, pk):
+        file = request.FILES.get('file', '')
+        return self._create_update_data_set(file=file, req_data=request.POST)
+
+    def put(self, request, pk):
+        file = request.FILES.get('file', '',)
+        return self._create_update_data_set(file=file, req_data=request.PUT, pk=pk)
 
     def delete(self, request, cust_id):
         MLData.objects.filter(customer_id=cust_id).delete()
         return HttpJson(ujson.dumps(["ok"]))
 
 
-class MLDataCSVView(View):
-
-    def post(self, request, cust_id):
-        res = list(MLData.objects.filter(customer_id=cust_id))
-        if len(res):
-            data = res[0].data
-            response = HttpResponse(content_type='text/json')
-            response['Content-Disposition'] = 'attachment; filename = "somefilename.csv"'
-            fieldnames = data.keys()
-
-            writer = csv.DictWriter(response, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerow(data)
-            return response
-        else:
-            return HttpJson(ujson.dumps(['row %d not found' % cust_id]))
+class MLDataSetRowView(View):
+    def put(self, request, pk):
+        data = request.PUT
+        try:
+            instance = MLData.objects.get(pk=pk)
+        except Exception:
+            return HttpResponseBadRequest(ujson.dumps(['Data set with `pk` %d not found' % pk]))
+        row_index = int(data["row_index"])
+        for x in instance.data:
+            if x["row_index"] == row_index:
+                x[data['col_name']] = data['value']
+        instance.save()
+        return HttpJson(ujson.dumps(["ok"]))
