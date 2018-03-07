@@ -1,0 +1,9 @@
+.content{
+    width: 300px;
+}
+.main_page .ui-tree{
+    width: 100%;
+}
+.main_page .ui-tree .ui-tree-container{
+    padding: 15px;
+}

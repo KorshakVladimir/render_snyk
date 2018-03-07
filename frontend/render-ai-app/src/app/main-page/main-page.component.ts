@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DataRowService } from '../data-row.service';
 import { Router } from '@angular/router';
+import { ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
-  styleUrls: ['./main-page.component.css']
+  styleUrls: ['./main-page.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MainPageComponent implements OnInit {
   public data_sets_tree: Array<object> = [];

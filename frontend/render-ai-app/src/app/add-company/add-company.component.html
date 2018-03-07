@@ -1,22 +1,27 @@
-<div ngClass="component_body">
-    <form action="" ngClass="add_company_form" #company_form="ngForm">
-        <h3>Create New Company</h3>
-        <div class="form_group">
-            <label for="name">Name:</label>
-            <input [(ngModel)]="model.name" name="name" id="name" required="" #name="ngModel"
-                   ngClass="form-control"
-            >
-            <div [hidden]="name.valid || name.pristine" class="form_error">
-                Name is required
+<div ngClass="content new_company">
+    <div ngClass="content_title">
+        Create New Company
+    </div>
+    <div ngClass="content_body">
+        <form action="" ngClass="add_company_form" #company_form="ngForm">
+            <h3>Create New Company</h3>
+            <div class="form_group">
+                <label for="name">Name:</label>
+                <input [(ngModel)]="model.name" name="name" id="name" required="" #name="ngModel"
+                       ngClass="form-control"
+                >
+                <div [hidden]="name.valid || name.pristine" class="form_error">
+                    Name is required
+                </div>
+                <app-form-field-error [errors]="server_error" [name]='name' >
+                </app-form-field-error>
             </div>
-            <app-form-field-error [errors]="server_error" [name]='name' >
-            </app-form-field-error>
-        </div>
-        <button pButton  class="to-right" type="button "
-                [disabled]="!company_form.form.valid"
-                (click)="create_new()" label="Create">
-        </button>
-        <br>
-        <br>
-    </form>
+            <button pButton  class="to-right" type="button "
+                    [disabled]="!company_form.form.valid"
+                    (click)="create_new()" label="Create">
+            </button>
+            <br>
+            <br>
+        </form>
+    </div>
 </div>

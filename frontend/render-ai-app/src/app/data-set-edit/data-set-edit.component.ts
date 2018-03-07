@@ -27,7 +27,7 @@ export class DataSetEditComponent implements OnInit {
   ) { }
   ngOnInit() {
     this.get_data_set();
-    this.scroll_height = `${window.innerHeight - 200}px`;
+    this.scroll_height = `${window.innerHeight - 250}px`;
 
   }
   set_data_for_table(data) {

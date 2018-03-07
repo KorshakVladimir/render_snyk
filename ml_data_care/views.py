@@ -2,12 +2,14 @@ import csv
 
 import sys
 from django.core.files.storage import FileSystemStorage
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponseBadRequest
 
 from django.views import View
 from django.conf import settings
 from . models import MLData
 from . forms import NewDataSetForm
+
+from company_management.models import Company
 
 import ujson
 
@@ -20,12 +22,13 @@ class MLDataView(View):
     def get(request):
         res = []
         data_sets = list(MLData.objects.values_list("company__name", "name", "id"))
-        tree = {}
+        companies = Company.objects.values_list("name", flat=True)
+        tree = dict.fromkeys(companies)
         for data_set in data_sets:
             company = data_set[0]
             ds_name = data_set[1]
             id = data_set[2]
-            if company in tree:
+            if company in tree and isinstance(tree[company], list):
                 tree[company].append({
                     "label": ds_name,
                     "data": id,

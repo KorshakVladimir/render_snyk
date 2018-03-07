@@ -8,6 +8,7 @@
     background: #fff;
     box-shadow: 0px 4px 7px #f0f0f3fa;
     z-index: 99999;
+    padding-left: 15px;
 }
 .main_toolbar.ui-menubar .ui-menubar-custom {
     float: left;
