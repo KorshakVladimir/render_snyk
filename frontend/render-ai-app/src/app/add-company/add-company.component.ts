@@ -19,8 +19,8 @@ export class AddCompanyComponent implements OnInit {
   ngOnInit() {
      this.model = new Company(0, '');
   }
-  create_new() {
-    const formData = JSON.stringify(this.model);
+  create_new(model) {
+    const formData = JSON.stringify(model);
     this.service.create_company(formData).subscribe(
       res => this.router.navigate(['/main_page']),
       error => this.server_error = error.error

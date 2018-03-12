@@ -3,25 +3,7 @@
         Create New Company
     </div>
     <div ngClass="content_body">
-        <form action="" ngClass="add_company_form" #company_form="ngForm">
-            <h3>Create New Company</h3>
-            <div class="form_group">
-                <label for="name">Name:</label>
-                <input [(ngModel)]="model.name" name="name" id="name" required="" #name="ngModel"
-                       ngClass="form-control"
-                >
-                <div [hidden]="name.valid || name.pristine" class="form_error">
-                    Name is required
-                </div>
-                <app-form-field-error [errors]="server_error" [name]='name' >
-                </app-form-field-error>
-            </div>
-            <button pButton  class="to-right" type="button "
-                    [disabled]="!company_form.form.valid"
-                    (click)="create_new()" label="Create">
-            </button>
-            <br>
-            <br>
-        </form>
+        <app-form-company (formSubmit)="create_new(model)" [model]="model" [server_error]="server_error">
+        </app-form-company>
     </div>
 </div>

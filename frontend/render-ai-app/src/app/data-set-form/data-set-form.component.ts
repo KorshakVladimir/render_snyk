@@ -24,12 +24,16 @@ export class DataSetFormComponent implements OnInit {
       this.companies = data;
     });
   }
-  get_files(event) {
+  get_files(event, form_instance) {
      this.file = event.files[0];
+     if (this.file) {
+       form_instance.form.pristine = false;
+     }
   }
-  handleSubmit(upLoader) {
+  handleSubmit(upLoader, form_instance) {
     this.model.file = this.file;
     this.formSubmit.emit(this.model);
     upLoader.clear();
+    form_instance.form.pristine = true;
   }
 }

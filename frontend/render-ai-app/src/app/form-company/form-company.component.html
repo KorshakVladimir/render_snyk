@@ -1,0 +1,21 @@
+<form action="" ngClass="add_company_form" #company_form="ngForm" (ngSubmit)="handleSubmit(company_form)">
+    <div class="form_group">
+        <label for="name">Name:</label>
+        <input [(ngModel)]="model.name" name="name" id="name" required="" #name="ngModel"
+               ngClass="form-control"
+        >
+        <div [hidden]="name.valid || name.pristine" class="form_error">
+            Name is required
+        </div>
+        <app-form-field-error [errors]="server_error" [name]='name' >
+        </app-form-field-error>
+    </div>
+
+    <button *ngIf="model.id!=0" pButton type="button" (click)="handleCompany()" label="Delete"  class="ui-button-danger"></button>
+    <button pButton  class="to-right" type="submit"
+            [disabled]="!company_form.form.valid || company_form.form.pristine"
+            label="Save"
+    ></button>
+    <br>
+    <br>
+</form>

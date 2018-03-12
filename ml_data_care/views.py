@@ -22,8 +22,11 @@ class MLDataView(View):
     def get(request):
         res = []
         data_sets = list(MLData.objects.values_list("company__name", "name", "id"))
-        companies = Company.objects.values_list("name", flat=True)
-        tree = dict.fromkeys(companies)
+        companies = Company.objects.values_list("name", "id")
+        companies_data = {}
+        tree = {}
+        for company in companies:
+            companies_data[company[0]] = company[1]
         for data_set in data_sets:
             company = data_set[0]
             ds_name = data_set[1]
@@ -42,7 +45,7 @@ class MLDataView(View):
         for tree_key, value in tree.items():
             res.append({
                 "label": tree_key,
-                "data": tree_key,
+                "data": companies_data[tree_key],
                 "children": value
             })
         return HttpJson(ujson.dumps(res))

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class DataRowService {
@@ -24,11 +24,21 @@ export class DataRowService {
   all_data_sets() {
     return this.http.get(`${this.base_url}${this.module_base}all_data_sets/`);
   }
-  private company_base = 'company/';
-  create_company(formData) {
-      return this.http.post(`${this.base_url}${this.company_base}create/`, formData);
-  }
+  private company_base = 'company_management/';
+  
   get_company_names() {
       return this.http.get(`${this.base_url}${this.company_base}company_names/`);
+  }
+  get_company(id) {
+      return this.http.get(`${this.base_url}${this.company_base}company/${id}/`);
+  }
+  create_company(formData) {
+      return this.http.post(`${this.base_url}${this.company_base}company/`, formData);
+  }
+  update_company(formData, id) {
+      return this.http.put(`${this.base_url}${this.company_base}company/${id}/`, formData);
+  }
+  delete_company(id) {
+      return this.http.delete(`${this.base_url}${this.company_base}company/${id}/`);
   }
 }

@@ -1,0 +1,11 @@
+<div ngClass="content edit_company">
+    <div ngClass="content_title">
+        Edit Company
+    </div>
+    <div ngClass="content_body">
+        <app-form-company (formSubmit)="save_changes(model)" [model]="model" [server_error]="server_error"
+                          (deleteCompany)="deleteCompany(model)"
+        >
+        </app-form-company>
+    </div>
+</div>

@@ -30,6 +30,8 @@ import { DataSetEditComponent } from './data-set-edit/data-set-edit.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { FormFieldErrorComponent } from './form-field-error/form-field-error.component';
 import { DataSetFormComponent } from './data-set-form/data-set-form.component';
+import { EditCompanyComponent } from './edit-company/edit-company.component';
+import { FormCompanyComponent } from './form-company/form-company.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { DataSetFormComponent } from './data-set-form/data-set-form.component';
     MainPageComponent,
     FormFieldErrorComponent,
     DataSetFormComponent,
+    EditCompanyComponent,
+    FormCompanyComponent,
   ],
   imports: [
     // PrimeNG

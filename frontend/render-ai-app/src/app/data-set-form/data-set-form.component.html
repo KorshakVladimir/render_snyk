@@ -1,4 +1,4 @@
-<form action="" ngClass="add_data_set_form" #data_set_form="ngForm"  (ngSubmit)="handleSubmit(upLoader);">
+<form action="" ngClass="add_data_set_form" #data_set_form="ngForm"  (ngSubmit)="handleSubmit(upLoader, data_set_form);">
     <div class="form_group">
         <label for="name">Name:</label>
         <input [(ngModel)]="model.name" name="name" id="name" required="" #name="ngModel"
@@ -34,7 +34,7 @@
         <p-fileUpload name="myfile[]"
                       files="files"
                       customUpload="True"
-                      (uploadHandler)="get_files($event)"
+                      (uploadHandler)="get_files($event, data_set_form)"
                       accept=".csv"
                       auto="auto"
                       id="file_to_load"
@@ -46,7 +46,7 @@
     </div>
     <app-form-field-error [errors]="server_error" [name]='{"name": "__all__"}' >
     </app-form-field-error>
-    <button pButton  class="to-right" label="Save" [disabled]="!data_set_form.form.valid">
+    <button pButton  class="to-right" label="Save" [disabled]="!data_set_form.form.valid || data_set_form.form.pristine">
     </button>
     <br>
     <br>

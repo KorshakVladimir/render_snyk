@@ -13,9 +13,9 @@ class CompanyView(View):
     @staticmethod
     def get(request, pk):
         current_company = Company.objects.filter(pk=pk)
-        if not current_company:
+        if not len(current_company):
             return HttpResponseBadRequest("Company with id: %d  not found" % pk)
-        return HttpJson(ujson.dumps({"name": current_company.name}))
+        return HttpJson(ujson.dumps({"name": current_company[0].name, "id": current_company[0].id}))
 
     @staticmethod
     def post(request):
@@ -30,7 +30,7 @@ class CompanyView(View):
     @staticmethod
     def put(request, pk):
         try:
-            current_company = Company.objects.filter(pk=pk)
+            current_company = Company.objects.get(pk=pk)
             current_company.name = request.PUT["name"]
             current_company.save()
         except Exception:
