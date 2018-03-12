@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataRowService } from '../data-row.service';
 import { ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { DataSetModels } from '../models/data-set.models';
 
@@ -23,6 +24,7 @@ export class DataSetEditComponent implements OnInit {
   constructor(
       private service: DataRowService,
       private route: ActivatedRoute,
+      private router: Router,
       private spinnerService: Ng4LoadingSpinnerService
   ) { }
   ngOnInit() {
@@ -81,5 +83,16 @@ export class DataSetEditComponent implements OnInit {
     formData.append('col_name', col_name);
     formData.append('row_index', row['row_index']);
     this.service.update_data_set_row(formData, this.data_set_id).subscribe();
+  }
+
+  deleteDataSet(model) {
+    this.service.delete_data_set(model.id).subscribe(res => {
+          this.spinnerService.hide();
+          this.router.navigate(['/main_page']);
+        },
+        error => {
+          this.spinnerService.hide();
+        });
+    this.spinnerService.show();
   }
 }

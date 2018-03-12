@@ -57,7 +57,9 @@
        </p-table>
     </p-tabPanel>
     <p-tabPanel header="Properties">
-        <app-data-set-form (formSubmit)="save_data_set(model)" [model]="model" [server_error]="server_error">
+        <app-data-set-form (formSubmit)="save_data_set(model)" [model]="model" [server_error]="server_error"
+                           (deleteDataSet)="deleteDataSet(model)"
+        >
         </app-data-set-form>
     </p-tabPanel>
 </p-tabView>

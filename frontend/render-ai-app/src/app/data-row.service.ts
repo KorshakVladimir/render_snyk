@@ -24,8 +24,11 @@ export class DataRowService {
   all_data_sets() {
     return this.http.get(`${this.base_url}${this.module_base}all_data_sets/`);
   }
+  delete_data_set(id) {
+    return this.http.delete(`${this.base_url}${this.module_base}data_set/${id}/`);
+  }
   private company_base = 'company_management/';
-  
+
   get_company_names() {
       return this.http.get(`${this.base_url}${this.company_base}company_names/`);
   }

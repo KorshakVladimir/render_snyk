@@ -46,6 +46,8 @@
     </div>
     <app-form-field-error [errors]="server_error" [name]='{"name": "__all__"}' >
     </app-form-field-error>
+    <button *ngIf="model.id!=0" pButton type="button" (click)="handleDelete()" label="Delete"  class="ui-button-danger">
+    </button>
     <button pButton  class="to-right" label="Save" [disabled]="!data_set_form.form.valid || data_set_form.form.pristine">
     </button>
     <br>

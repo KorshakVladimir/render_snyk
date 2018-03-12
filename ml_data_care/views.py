@@ -68,6 +68,7 @@ class MLDataSetView(View):
         try:
             # todo: rewrite for one query
             ml_data = MLData.objects.get(id=pk)
+            context["id"] = ml_data.id
             context["name"] = ml_data.name
             context["company"] = {"id": ml_data.company_id, "name": ml_data.company.name}
             context["data"] = ml_data.data
@@ -121,8 +122,8 @@ class MLDataSetView(View):
         file = request.FILES.get('file', '',)
         return self._create_update_data_set(file=file, req_data=request.PUT, pk=pk)
 
-    def delete(self, request, cust_id):
-        MLData.objects.filter(customer_id=cust_id).delete()
+    def delete(self, request, pk):
+        MLData.objects.filter(pk=pk).delete()
         return HttpJson(ujson.dumps(["ok"]))
 
 

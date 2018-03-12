@@ -13,7 +13,7 @@ export class DataSetFormComponent implements OnInit {
   @Input('model') model;
   @Input('server_error') server_error;
   @Output() formSubmit = new EventEmitter();
-
+  @Output() deleteDataSet = new EventEmitter();
   public file;
   public companies: Company[];
 
@@ -35,5 +35,8 @@ export class DataSetFormComponent implements OnInit {
     this.formSubmit.emit(this.model);
     upLoader.clear();
     form_instance.form.pristine = true;
+  }
+  handleDelete() {
+    this.deleteDataSet.emit(this.model);
   }
 }
