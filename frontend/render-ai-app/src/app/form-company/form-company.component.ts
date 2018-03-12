@@ -11,6 +11,7 @@ export class FormCompanyComponent implements OnInit {
   @Input('server_error') server_error;
   @Output() formSubmit = new EventEmitter();
   @Output() deleteCompany = new EventEmitter();
+  public display;
   constructor() { }
 
   ngOnInit() {

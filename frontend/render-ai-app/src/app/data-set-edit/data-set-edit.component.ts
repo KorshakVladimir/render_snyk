@@ -48,7 +48,7 @@ export class DataSetEditComponent implements OnInit {
   }
   prepare_cols (data) {
     const data_cols = [];
-    if (data.length > 0) {
+    if (data && data.length > 0) {
       Object.keys(data[0]).forEach(col => data_cols.push({'name': col}));
     }
     return data_cols;

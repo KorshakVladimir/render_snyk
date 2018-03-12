@@ -10,3 +10,9 @@
     border-color: #fff;
     padding: 0px;
 }
+.delete_modal .ui-widget-header{
+    color: #676a6c;
+    font-weight: bold;
+    background: #fff;
+    border-bottom: 1px solid #e1e4e6;
+}

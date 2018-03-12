@@ -46,8 +46,14 @@
     </div>
     <app-form-field-error [errors]="server_error" [name]='{"name": "__all__"}' >
     </app-form-field-error>
-    <button *ngIf="model.id!=0" pButton type="button" (click)="handleDelete()" label="Delete"  class="ui-button-danger">
+    <button *ngIf="model.id!=0" pButton type="button" (click)="display=true" label="Delete"  class="ui-button-danger">
     </button>
+    <p-dialog header="Are you sure ?" [(visible)]="display" [modal]="true" [closeOnEscape]="true" styleClass="delete_modal">
+        <button pButton  label="Cancel" (click)="display=false">
+        </button>
+        <button  pButton type="button" (click)="handleDelete()" label="Delete"  class="ui-button-danger">
+        </button>
+    </p-dialog>
     <button pButton  class="to-right" label="Save" [disabled]="!data_set_form.form.valid || data_set_form.form.pristine">
     </button>
     <br>

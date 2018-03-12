@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogModule } from 'primeng/dialog';
 
 import {PrettyJsonModule} from 'angular2-prettyjson';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
@@ -57,6 +58,7 @@ import { FormCompanyComponent } from './form-company/form-company.component';
     FileUploadModule,
     TabViewModule,
     MultiSelectModule,
+    DialogModule,
     // -------
     BrowserAnimationsModule,
     BrowserModule,

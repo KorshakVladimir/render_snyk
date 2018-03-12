@@ -16,6 +16,7 @@ export class DataSetFormComponent implements OnInit {
   @Output() deleteDataSet = new EventEmitter();
   public file;
   public companies: Company[];
+  public display: boolean = false;
 
   constructor(private service: DataRowService) { }
 

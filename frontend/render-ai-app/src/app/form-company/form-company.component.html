@@ -10,8 +10,15 @@
         <app-form-field-error [errors]="server_error" [name]='name' >
         </app-form-field-error>
     </div>
-
-    <button *ngIf="model.id!=0" pButton type="button" (click)="handleCompany()" label="Delete"  class="ui-button-danger"></button>
+    <p-dialog *ngIf="model.id!=0" header="Are you sure ?" [(visible)]="display" [modal]="true" [closeOnEscape]="true"
+              styleClass="delete_modal">
+        <button pButton  label="Cancel" (click)="display=false">
+        </button>
+        <button  pButton type="button" (click)="handleCompany()" label="Delete"  class="ui-button-danger">
+        </button>
+    </p-dialog>
+    <button  pButton type="button" (click)="display=true" label="Delete"  class="ui-button-danger">
+    </button>
     <button pButton  class="to-right" type="submit"
             [disabled]="!company_form.form.valid || company_form.form.pristine"
             label="Save"
