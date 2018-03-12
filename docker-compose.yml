@@ -5,6 +5,12 @@ services:
     image: postgres:10.2
     ports:
       - "5432:5432"
+  nodejs:
+    image: node:8.9.4
+    command: bash -c "npm i && npm run build"
+    volumes:
+      - ./frontend/render-ai-app:/front_end
+    working_dir: /front_end
   web:
     environment:
       - HOST_DB=db
@@ -15,4 +21,6 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      - "db"
+      - "nodejs"
+
