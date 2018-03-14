@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { DataRowService } from '../data-row.service';
-import { Company } from '../models/company-models';
+import { Company } from '../../company-management/company.models';
 import { ViewEncapsulation } from '@angular/core';
+import { CompanyService } from '../../company-management/company.service'
 
 @Component({
   selector: 'app-data-set-form',
@@ -16,9 +16,9 @@ export class DataSetFormComponent implements OnInit {
   @Output() deleteDataSet = new EventEmitter();
   public file;
   public companies: Company[];
-  public display: boolean = false;
+  public display = false;
 
-  constructor(private service: DataRowService) { }
+  constructor(private service: CompanyService) { }
 
   ngOnInit() {
     this.service.get_company_names().subscribe((data: Company[]) => {

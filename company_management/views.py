@@ -18,7 +18,7 @@ class CompanyView(View):
         return HttpJson(ujson.dumps({"name": current_company[0].name, "id": current_company[0].id}))
 
     @staticmethod
-    def post(request):
+    def post(request, pk):
         data = request.POST
         form = NewCompanyForm(data)
         if form.is_valid():

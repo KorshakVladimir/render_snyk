@@ -1,4 +1,4 @@
-import { Company } from './company-models';
+import { Company } from '../company-management/company.models';
 
 export class DataSetModels {
   constructor(

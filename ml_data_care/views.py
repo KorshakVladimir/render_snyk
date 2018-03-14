@@ -21,32 +21,25 @@ class MLDataView(View):
     @staticmethod
     def get(request):
         res = []
-        data_sets = list(MLData.objects.values_list("company__name", "name", "id"))
-        companies = Company.objects.values_list("name", "id")
-        companies_data = {}
-        tree = {}
-        for company in companies:
-            companies_data[company[0]] = company[1]
+        data_sets = list(MLData.objects.values_list("company_id", "name", "id"))
+        companies = Company.objects.values_list("name", "id").order_by("name")
+
+        tree = {x[1]: {"name": x[0], "children": []} for x in companies}
+
         for data_set in data_sets:
-            company = data_set[0]
+            company_id = data_set[0]
             ds_name = data_set[1]
             id = data_set[2]
-            if company in tree and isinstance(tree[company], list):
-                tree[company].append({
-                    "label": ds_name,
-                    "data": id,
-                })
-            else:
-                tree[company] = [{
-                    "label": ds_name,
-                    "data": id,
-                }]
+            tree[company_id]["children"].append({
+                "label": ds_name,
+                "data": id,
+            })
 
         for tree_key, value in tree.items():
             res.append({
-                "label": tree_key,
-                "data": companies_data[tree_key],
-                "children": value
+                "label": value["name"],
+                "data": tree_key,
+                "children": value["children"]
             })
         return HttpJson(ujson.dumps(res))
 

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { DataRowService } from '../data-row.service';
+import { CompanyService } from '../company.service';
 
-import { Company } from '../models/company-models';
+import { Company } from '../company.models';
 
 @Component({
   selector: 'app-add-company',
@@ -13,8 +13,10 @@ import { Company } from '../models/company-models';
 export class AddCompanyComponent implements OnInit {
   public server_error = {};
   public model: Company;
-  constructor(private service: DataRowService,
-              private router: Router) { }
+  constructor(
+      private service: CompanyService,
+      private router: Router
+  ) { }
 
   ngOnInit() {
      this.model = new Company(0, '');

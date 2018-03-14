@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataRowService } from '../data-row.service';
+import { DataRowService } from '../data-sets-management/data-row.service';
 import { Router } from '@angular/router';
 import { ViewEncapsulation } from '@angular/core';
 

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ActivatedRoute } from '@angular/router';
-import { DataRowService } from '../data-row.service';
+import { CompanyService } from '../company.service';
 import { Router } from '@angular/router';
 
-import { Company } from '../models/company-models';
+import { Company } from '../company.models';
 
 import { ViewEncapsulation } from '@angular/core';
 @Component({
@@ -18,7 +18,7 @@ export class EditCompanyComponent implements OnInit {
   public server_error = {};
   public model: Company = new Company(0, '');
   constructor(
-      private service: DataRowService,
+      private service: CompanyService,
       private route: ActivatedRoute,
       private router: Router,
       private spinnerService: Ng4LoadingSpinnerService
