@@ -27,4 +27,7 @@ export class DataRowService {
   delete_data_set(id) {
     return this.http.delete(`${this.base_url}${this.module_base}data_set/${id}/`);
   }
+  map_new_data_set(id, formData) {
+    return this.http.post(`${this.base_url}${this.module_base}map_new_data_set/${id}/`, formData);
+  }
 }

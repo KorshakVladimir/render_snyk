@@ -1,5 +1,5 @@
 
-from django.contrib.postgres.fields import JSONField, ArrayField
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from company_management.models import Company

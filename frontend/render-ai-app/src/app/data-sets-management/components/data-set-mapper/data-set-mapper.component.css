@@ -1,0 +1,23 @@
+.ui-orderlist .ui-orderlist-caption{
+    color: #676a6c;
+}
+.ui-orderlist{
+    display: inline-flex;
+    width: 100%;
+}
+.push_to_mapper{
+    margin-top: 100px;
+}
+.ui-orderlist-list-container{
+    width: 100%;
+    border: 1px solid #ccc;
+}
+.ui-orderlist .ui-orderlist-controls{
+    display: none;
+}
+.ui-orderlist .ui-orderlist-list{
+    width: 100%;
+}
+.ui-steps .ui-steps-item{
+    width: 50%;
+}

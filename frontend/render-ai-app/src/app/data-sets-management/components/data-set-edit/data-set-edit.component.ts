@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DataRowService } from '../data-row.service';
+import { DataRowService } from '../../data-row.service';
 import { ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { DataSetModels } from '../data-set.models';
+import { DataSetModels } from '../../data-set.models';
 
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
@@ -21,6 +21,7 @@ export class DataSetEditComponent implements OnInit {
   public model: DataSetModels = new DataSetModels(0, '', null, []);
   public data_set_id: number;
   public selectedColumns;
+  public loading;
   constructor(
       private service: DataRowService,
       private route: ActivatedRoute,

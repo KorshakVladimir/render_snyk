@@ -1,0 +1,16 @@
+.mapper_component{
+    /*width: ;*/
+}
+.new_data_mapping_modal.ui-dialog .ui-dialog-titlebar{
+    color: #3f434d;
+    padding: 10px;
+    font-weight: bold;
+    background: #fff;
+    border-bottom: 1px solid #e1e4e6;
+}
+.mapped_list_item{
+}
+
+.text_mapped_list{
+
+}

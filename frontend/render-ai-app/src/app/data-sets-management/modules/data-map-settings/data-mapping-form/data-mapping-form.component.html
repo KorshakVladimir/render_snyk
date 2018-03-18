@@ -1,0 +1,21 @@
+<form action="" ngClass="data_mapping_form" #data_mapping_form="ngForm" (ngSubmit)="handleSubmit()">
+    <div class="form_group">
+        <label for="name">Name:</label>
+        <input [(ngModel)]="model.name" name="name" id="name" required="" #name="ngModel"
+               ngClass="form-control"
+        >
+        <div [hidden]="name.valid || name.pristine" class="form_error">
+            Name is required
+        </div>
+        <app-form-field-error [errors]="server_error" [name]='name' >
+        </app-form-field-error>
+    </div>
+    <button pButton  label="Cancel" (click)="display=false">
+            </button>
+    <button pButton  class="to-right" type="submit"
+            [disabled]="!data_mapping_form.form.valid || data_mapping_form.form.pristine"
+            label="Save"
+    ></button>
+    <br>
+    <br>
+</form>

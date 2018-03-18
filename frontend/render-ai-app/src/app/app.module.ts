@@ -27,7 +27,6 @@ import { DataSetsManagementModule } from './data-sets-management/data-sets-manag
 
 @NgModule({
   declarations: [
-
     AppComponent,
     MainMenuComponent,
     MainPageComponent,

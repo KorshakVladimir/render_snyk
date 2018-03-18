@@ -6,7 +6,7 @@ from django.http import HttpResponseBadRequest
 
 from django.views import View
 from django.conf import settings
-from . models import MLData
+from .models import MLData
 from . forms import NewDataSetForm
 
 from company_management.models import Company
@@ -14,6 +14,33 @@ from company_management.models import Company
 import ujson
 
 from helpers.responce import HttpJson
+
+
+def csv_to_json(file):
+    def _remove_bad_preposition(row):
+        str_row = ujson.dumps(row)
+        if str_row[2:8] == '\\ufeff':
+            str_row = str_row[0:2] + str_row[8:]
+        return ujson.loads(str_row)
+    fs = FileSystemStorage()
+    filename = fs.save(file.name, file)
+    relative_path = settings.MEDIA_ROOT + '/' + filename
+    data_set_data = []
+    try:
+        with open(relative_path, newline='') as csvfile:
+            file_reader = csv.reader(csvfile, dialect='excel')
+            first_row = _remove_bad_preposition(next(file_reader))
+            row_index = 1
+            for row in file_reader:
+                data_dict = dict(zip(first_row, row))
+                data_dict["row_index"] = row_index
+                data_set_data.append(data_dict)
+                row_index += 1
+    except Exception:
+        return data_set_data
+    finally:
+        fs.delete(relative_path)
+    return data_set_data
 
 
 class MLDataView(View):
@@ -83,28 +110,10 @@ class MLDataSetView(View):
 
         if not data_set.is_valid():
             return HttpResponseBadRequest(data_set.errors.as_json())
-        ml_data = data_set.save()
+        ml_data = data_set.save(commit=False)
         if file:
-            fs = FileSystemStorage()
-            filename = fs.save(file.name, file)
-            relative_path = settings.MEDIA_ROOT + '/' + filename
-            try:
-                with open(relative_path, newline='') as csvfile:
-                    file_reader = csv.reader(csvfile, dialect='excel')
-                    first_row = next(file_reader)
-                    row_index = 1
-                    data_set_data = []
-                    for row in file_reader:
-                        data_dict = dict(zip(first_row, row))
-                        data_dict["row_index"] = row_index
-                        data_set_data.append(data_dict)
-                        row_index += 1
-                    ml_data.data = data_set_data
-                    ml_data.save()
-            except Exception:
-                return HttpResponseBadRequest(ujson.dumps({'file_to_load': sys.exc_info()[1]}))
-            finally:
-                fs.delete(relative_path)
+            ml_data.data = csv_to_json(file)
+        ml_data.save()
         return HttpJson(ujson.dumps({"data": ml_data.data, "id": ml_data.id}))
 
     def post(self, request, pk):
@@ -133,3 +142,30 @@ class MLDataSetRowView(View):
                 x[data['col_name']] = data['value']
         instance.save()
         return HttpJson(ujson.dumps(["ok"]))
+
+
+class MLDataMapping(View):
+
+    def post(self, request, pk):
+        try:
+            instance = MLData.objects.get(pk=pk)
+        except Exception:
+            return HttpResponseBadRequest(ujson.dumps(['Data set with `pk` %d not found' % pk]))
+        mapped_columns = ujson.loads(request.POST["mapped_columns"])
+        primary_mapping = ujson.loads(request.POST["primary_columns"])
+        origin_column = primary_mapping['origin_column']
+        new_set_column = primary_mapping['new_set_column']
+        file = request.FILES.get('file', '')
+        new_data_set = csv_to_json(file)
+        new_data_set_dict = {x[new_set_column]: x for x in new_data_set}
+        origin_data_set = instance.data
+
+        for row in origin_data_set:
+            pk = row[origin_column]
+            new_data_set_row = new_data_set_dict[pk]
+            for columns in mapped_columns:
+                row[columns['origin_column']] = new_data_set_row[columns['new_set_column']]
+
+        instance.data = origin_data_set
+        instance.save()
+        return HttpJson(ujson.dumps(origin_data_set))

@@ -1,0 +1,67 @@
+<div class="mapper_component">
+    <div class="ui-g-12">
+        <p-dropdown [options]="data_mapping"
+                    placeholder="Select a Data Map Settings" optionLabel="name"
+                    styleClass="data_map_settings"
+                    [(ngModel)]="selected_data_mapping"
+                    [style]="{width:'100%'}"
+                    [filter]="true"
+                    (onChange)="change_data_mapping()">
+        </p-dropdown>
+    </div>
+    <div class="ui-g-12">
+    <button type="button" pButton icon="fa-plus" iconPos="left"
+           label="Add New Elem" (click)="add_new_map_element()">
+    </button>
+    <button type="button" pButton icon="fa-plus" iconPos="left"
+           label="Save" (click)="save_map_element()">
+    </button>
+
+    <button type="button" pButton icon="fa-plus" iconPos="left"
+           label="Save As" (click)="save_as_map_element()">
+    </button>
+
+    <button type="button" pButton icon="fa-plus" iconPos="left"
+           label="Delete" (click)="delete_map_element()">
+    </button>
+    </div>
+    <div class="ui-g-12">
+        <p-orderList [value]="mapped_columns" [listStyle]="{'height':'300px'}"  header="Mapped Columns"
+                     filter="filter" filterBy="origin_column,new_set_column"
+                     (onSelectionChange) = "select_primary_mapping($event)">
+            <ng-template let-item let-i="index" pTemplate="item">
+                <div  [ngClass]="{'ui-state-highlight' : item.origin_column==primary_columns.origin_column}">
+                    <div class="ui-g">
+                        <div class="ui-g-5">
+                            <input type="text" [(ngModel)]="item.origin_column" placeholder="origin columns"
+                                   class="mapped_list_item  form-control">
+                        </div>
+                        <div class="ui-g-5">
+                            <input type="text" [(ngModel)]="item.new_set_column" placeholder="new set columns"
+                                   class="mapped_list_item form-control">
+                        </div>
+                        <div class="ui-g-2">
+                            <button type="button" pButton icon="fa-trash" iconPos="left"
+                                    (click)="delete_mapping(i)">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-orderList>
+        <p-dialog  [(visible)]="display" [modal]="true" [closeOnEscape]="true" styleClass="create_data_set_modal"
+                  styleClass="new_data_mapping_modal">
+            <p-header>
+                Create new data mapping
+            </p-header>
+            <div ngClass="content new_company">
+                <div ngClass="content_body">
+                    <app-data-mapping-form (formSubmit)="save_on_server($event)"
+                                           [model]="selected_data_mapping"
+                                           [server_error]="server_error">
+                    </app-data-mapping-form>
+                </div>
+            </div>
+        </p-dialog>
+    </div>
+</div>

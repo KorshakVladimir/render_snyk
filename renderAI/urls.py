@@ -21,6 +21,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('api/ml_data/', include('ml_data_care.urls')),
     path('api/company_management/', include('company_management.urls')),
+    path('api/data_mapping/', include('data_mapping_settings.urls')),
     path('<string>', TemplateView.as_view(template_name="index.html")),
     path('', TemplateView.as_view(template_name="index.html"))
 ]

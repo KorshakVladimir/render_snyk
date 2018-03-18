@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Company } from '../../company-management/company.models';
+import { Company } from '../../../company-management/company.models';
 import { ViewEncapsulation } from '@angular/core';
-import { CompanyService } from '../../company-management/company.service'
+import { CompanyService } from '../../../company-management/company.service';
 
 @Component({
   selector: 'app-data-set-form',

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ViewEncapsulation } from '@angular/core';
-import { DataRowService } from '../data-row.service';
+import { DataRowService } from '../../data-row.service';
 
-import { DataSetModels } from '../data-set.models';
+import { DataSetModels } from '../../data-set.models';
 
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 

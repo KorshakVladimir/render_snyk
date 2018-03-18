@@ -1,4 +1,4 @@
-<p-tabView styleClass="data_set_tabs">
+    <p-tabView styleClass="data_set_tabs">
     <p-tabPanel header="Data Set">
        <p-table [columns]="cols"
                 [value]="model.data"
@@ -61,6 +61,9 @@
                            (deleteDataSet)="deleteDataSet(model)"
         >
         </app-data-set-form>
+    </p-tabPanel>
+    <p-tabPanel header="Data Mapper">
+        <app-data-set-mapper [origin_cols]="cols"></app-data-set-mapper>
     </p-tabPanel>
 </p-tabView>
 

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ml_data_care',
     'company_management',
+    'data_mapping_settings',
 ]
 
 MIDDLEWARE = [

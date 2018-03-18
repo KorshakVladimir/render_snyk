@@ -1,5 +1,6 @@
 .main_page{
     width: 300px;
+    margin: 0px;
 }
 .main_page .ui-tree{
     width: 100%;

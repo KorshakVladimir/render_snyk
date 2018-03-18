@@ -1,0 +1,51 @@
+<p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
+<div [hidden]="activeIndex!=0">
+    <label>Load CSV file with data:</label>
+    <p-fileUpload name="myfile[]"
+                  files="files"
+                  customUpload="True"
+                  (uploadHandler)="get_files($event)"
+                  accept=".csv"
+                  auto="auto"
+    ></p-fileUpload>
+</div>
+<div [hidden]="activeIndex!=1">
+    <div class="ui-g" >
+        <div class="ui-g-6 ui-g-nopad">
+            <div class="ui-g-5">
+                <p-orderList [value]="origin_cols" [listStyle]="{'height':'450px'}"  header="Origin Data Set Columns"
+                             filter="filter" filterBy="name"
+                             (onSelectionChange) = "select_origin_column($event)">
+                    <ng-template let-item pTemplate="item">
+                        <div class="ui-helper-clearfix">
+                            <div>{{item.name}}</div>
+                        </div>
+                    </ng-template>
+                </p-orderList>
+            </div>
+            <div class="ui-g-5">
+                <p-orderList [value]="new_set_columns" [listStyle]="{'height':'450px'}"  header="New Data Set Columns"
+                             filter="filter" filterBy="name"
+                             (onSelectionChange) = "select_new_set_column($event)">
+                    <ng-template let-item pTemplate="item">
+                        <div class="ui-helper-clearfix">
+                            <div>{{item.name}}</div>
+                        </div>
+                    </ng-template>
+                </p-orderList>
+            </div>
+            <div class="ui-g-2">
+                <button pButton class="to-right push_to_mapper" label=">>" (click)="push_to_mapped()">
+                </button>
+            </div>
+        </div>
+
+        <div class="ui-g-6 ui-g-nopad">
+            <app-data-map-settings [(mapped_columns)]="mapped_columns" [(primary_columns)]="primary_columns">
+            </app-data-map-settings>
+            <button pButton class="to-right"  label="Map Data Sets" (click)="map_new_data_set()"></button>
+        </div>
+        <!--<app-form-field-error [errors]="server_error" [name]='{"name": "file_to_load"}' >-->
+        <!--</app-form-field-error>-->
+    </div>
+</div>
