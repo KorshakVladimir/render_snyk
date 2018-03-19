@@ -11,6 +11,25 @@ import {SelectItem} from 'primeng/api';
   encapsulation: ViewEncapsulation.None
 })
 export class DataMapSettingsComponent implements OnInit {
+  private _origin_cols;
+  private _new_set_columns;
+  @Input('origin_cols')origin_cols;
+  @Input('new_set_columns')new_set_columns;
+  // @Input('origin_cols')
+  // set origin_cols(origin_cols) {
+  //   this._origin_cols = origin_cols.map(el => el.name);
+  // }
+  // get origin_cols() {
+  //   return this._origin_cols;
+  // }
+  //
+  // @Input('new_set_columns')
+  // set new_set_columns(new_set_columns) {
+  //   this._new_set_columns = new_set_columns.map(el => el.name);
+  // }
+  // get new_set_columns() {
+  //   return this._new_set_columns;
+  // }
   @Input('mapped_columns') mapped_columns;
   @Output('mapped_columnsChange') mapped_columnsChange = new EventEmitter();
   @Input('primary_columns') primary_columns;
@@ -20,6 +39,7 @@ export class DataMapSettingsComponent implements OnInit {
   public selected_data_mapping_value: DataMapModels;
   public display = false;
   public server_error = {};
+  // public mapped_server
   constructor(private service: DataMapSettingsService) { }
 
   ngOnInit() {
@@ -34,6 +54,11 @@ export class DataMapSettingsComponent implements OnInit {
         },
         error => error.error
     );
+  }
+  validate_mapping() {
+    this.mapped_columns.forEach( el => {
+
+    });
   }
 
   change_data_mapping() {
@@ -53,6 +78,10 @@ export class DataMapSettingsComponent implements OnInit {
   }
 
   save_on_server(model) {
+    if (!model) {
+      this.display = false;
+      return;
+    }
     const formData = this.prepare_form_data(model);
     this.service.create_data_mapping(formData).subscribe(
       (res: DataMapModels) => {

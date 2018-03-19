@@ -17,4 +17,8 @@ export class DataMappingFormComponent implements OnInit {
   handleSubmit() {
     this.formSubmit.emit(this.model);
   }
+  onCancel(event) {
+    event.preventDefault();
+    this.formSubmit.emit(null);
+  }
 }

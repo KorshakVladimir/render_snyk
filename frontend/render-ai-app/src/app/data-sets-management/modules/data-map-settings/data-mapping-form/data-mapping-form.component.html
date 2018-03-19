@@ -10,7 +10,7 @@
         <app-form-field-error [errors]="server_error" [name]='name' >
         </app-form-field-error>
     </div>
-    <button pButton  label="Cancel" (click)="display=false">
+    <button pButton  label="Cancel" (click)="onCancel($event)">
             </button>
     <button pButton  class="to-right" type="submit"
             [disabled]="!data_mapping_form.form.valid || data_mapping_form.form.pristine"

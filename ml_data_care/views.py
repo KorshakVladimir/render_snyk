@@ -157,14 +157,30 @@ class MLDataMapping(View):
         new_set_column = primary_mapping['new_set_column']
         file = request.FILES.get('file', '')
         new_data_set = csv_to_json(file)
-        new_data_set_dict = {x[new_set_column]: x for x in new_data_set}
+        new_data_set_dict = {}
+        for x in new_data_set:
+            if new_set_column not in x:
+                return HttpResponseBadRequest(
+                    ujson.dumps(['In new row %s  column %s was not found' % (x, new_set_column)]))
+            new_data_set_dict[x[new_set_column]] = x
+
         origin_data_set = instance.data
 
         for row in origin_data_set:
+            if origin_column not in row:
+                return HttpResponseBadRequest(ujson.dumps(['In row %s  column %s was not found' % (row, origin_column)]))
             pk = row[origin_column]
-            new_data_set_row = new_data_set_dict[pk]
-            for columns in mapped_columns:
-                row[columns['origin_column']] = new_data_set_row[columns['new_set_column']]
+            if pk in new_data_set_dict:
+                new_data_set_row = new_data_set_dict[pk]
+                for columns in mapped_columns:
+                    if columns['origin_column'] not in row:
+                        return HttpResponseBadRequest(
+                            ujson.dumps(['In row %s  column %s was not found' % (row, columns['origin_column'])]))
+                    if columns['new_set_column'] not in new_data_set_row:
+                        return HttpResponseBadRequest(
+                            ujson.dumps(['In new row %s  column %s was not found' % (new_data_set_row,
+                                         columns['new_set_column'])]))
+                    row[columns['origin_column']] = new_data_set_row[columns['new_set_column']]
 
         instance.data = origin_data_set
         instance.save()

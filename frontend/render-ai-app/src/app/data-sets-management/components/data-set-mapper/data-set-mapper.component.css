@@ -39,3 +39,6 @@
 .data_mapping_list.ui-orderlist .ui-orderlist-list{
     height: calc(100vh - 330px);
 }
+.error_modal.ui-dialog{
+    width: 100%;
+}

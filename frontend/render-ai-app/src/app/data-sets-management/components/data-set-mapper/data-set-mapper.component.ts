@@ -41,6 +41,7 @@ export class DataSetMapperComponent implements OnInit {
   public new_data_set_file;
   public data_set_id;
   public server_error = {};
+  public displayError = false;
 
   constructor(
       private papa: PapaParseService,
@@ -113,6 +114,7 @@ export class DataSetMapperComponent implements OnInit {
           },
           error => {
               this.server_error = error.error;
+              this.displayError = true;
               this.spinnerService.hide();
           }
       );

@@ -8,6 +8,12 @@
             </button>
     </div>
 </div>
+<p-dialog header="Data merge has the error" [(visible)]="displayError" [modal]="true" [closeOnEscape]="true"
+              styleClass="error_modal">
+    <p>{{ server_error | json }}</p>
+        <button pButton  label="Close" (click)="displayError=false">
+        </button>
+    </p-dialog>
 <div [hidden]="activeIndex!=0" class="load_file_block">
     <label>Load CSV file with data:</label>
     <p-fileUpload name="myfile[]"
@@ -51,7 +57,12 @@
         </div>
 
         <div class="ui-g-6 ui-g-nopad">
-            <app-data-map-settings [(mapped_columns)]="mapped_columns" [(primary_columns)]="primary_columns">
+            <app-data-map-settings
+                    [(mapped_columns)]="mapped_columns"
+                    [(primary_columns)]="primary_columns"
+                    [new_set_columns]="new_set_columns"
+                    [origin_cols]="origin_cols"
+            >
             </app-data-map-settings>
         </div>
         <!--<app-form-field-error [errors]="server_error" [name]='{"name": "file_to_load"}' >-->

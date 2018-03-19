@@ -38,6 +38,7 @@ export class NewDataSetComponent implements OnInit {
     this.service.create_data_set(formData)
       .subscribe(
           (res: any) => {
+              this.spinnerService.hide();
               this.router.navigate(['/edit_data_set', res.id]);
           },
           error => {
