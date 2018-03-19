@@ -22,7 +22,7 @@
     <div class="ui-g-12">
         <p-orderList [value]="mapped_columns"
                      styleClass="data_mapping_settings_list"
-                     header="Mapped Columns"
+                     header="Origin Data Set Columns / New Data Set Columns"
                      filter="filter" filterBy="origin_column,new_set_column"
                      (onSelectionChange) = "select_primary_mapping($event)">
             <ng-template let-item let-i="index" pTemplate="item">
@@ -30,11 +30,15 @@
                     <div class="ui-g">
                         <div class="ui-g-5">
                             <input type="text" [(ngModel)]="item.origin_column" placeholder="origin columns"
-                                   class="mapped_list_item  form-control">
+                                   class="mapped_list_item  form-control"
+                                   [ngClass]="{'error_mapped_item': mapped_origin_error[item.origin_column]}"
+                            >
                         </div>
                         <div class="ui-g-5">
                             <input type="text" [(ngModel)]="item.new_set_column" placeholder="new set columns"
-                                   class="mapped_list_item form-control">
+                                   class="mapped_list_item form-control"
+                                   [ngClass]="{'error_mapped_item': mapped_new_set_error[item.new_set_column]}"
+                            >
                         </div>
                         <div class="ui-g-2 to-center">
                             <button type="button" pButton icon="fa-trash" iconPos="left"

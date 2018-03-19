@@ -32,9 +32,9 @@ export class DataSetMapperComponent implements OnInit {
 
   @Output('update_data') update_data = new EventEmitter();
   public activeIndex = 0;
-  public new_set_columns;
+  public new_set_columns = [];
   public mapped_columns = [];
-  public primary_columns;
+  public primary_columns = [];
   public new_data_set;
   public origin_column;
   public new_set_column;

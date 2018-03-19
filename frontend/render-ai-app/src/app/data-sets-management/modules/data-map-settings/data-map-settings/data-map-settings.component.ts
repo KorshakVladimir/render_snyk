@@ -13,23 +13,21 @@ import {SelectItem} from 'primeng/api';
 export class DataMapSettingsComponent implements OnInit {
   private _origin_cols;
   private _new_set_columns;
-  @Input('origin_cols')origin_cols;
-  @Input('new_set_columns')new_set_columns;
-  // @Input('origin_cols')
-  // set origin_cols(origin_cols) {
-  //   this._origin_cols = origin_cols.map(el => el.name);
-  // }
-  // get origin_cols() {
-  //   return this._origin_cols;
-  // }
-  //
-  // @Input('new_set_columns')
-  // set new_set_columns(new_set_columns) {
-  //   this._new_set_columns = new_set_columns.map(el => el.name);
-  // }
-  // get new_set_columns() {
-  //   return this._new_set_columns;
-  // }
+  @Input('origin_cols')
+  set origin_cols(origin_cols) {
+    this._origin_cols = origin_cols.map(el => el.name);
+  }
+  get origin_cols() {
+    return this._origin_cols;
+  }
+
+  @Input('new_set_columns')
+  set new_set_columns(new_set_columns) {
+    this._new_set_columns = new_set_columns.map(el => el.name);
+  }
+  get new_set_columns() {
+    return this._new_set_columns;
+  }
   @Input('mapped_columns') mapped_columns;
   @Output('mapped_columnsChange') mapped_columnsChange = new EventEmitter();
   @Input('primary_columns') primary_columns;
@@ -39,7 +37,8 @@ export class DataMapSettingsComponent implements OnInit {
   public selected_data_mapping_value: DataMapModels;
   public display = false;
   public server_error = {};
-  // public mapped_server
+  public mapped_origin_error = {};
+  public mapped_new_set_error = {};
   constructor(private service: DataMapSettingsService) { }
 
   ngOnInit() {
@@ -57,7 +56,12 @@ export class DataMapSettingsComponent implements OnInit {
   }
   validate_mapping() {
     this.mapped_columns.forEach( el => {
-
+      if (this.origin_cols.indexOf(el.origin_column) === -1) {
+        this.mapped_origin_error[el.origin_column] = true;
+      }
+      if (this.new_set_columns.indexOf(el.new_set_column) === -1) {
+        this.mapped_new_set_error[el.new_set_column] = true;
+      }
     });
   }
 
@@ -67,6 +71,7 @@ export class DataMapSettingsComponent implements OnInit {
     this.mapped_columnsChange.emit(this.mapped_columns);
     this.primary_columns = this.selected_data_mapping_value.primary_columns;
     this.primary_columnsChange.emit(this.primary_columns);
+    this.validate_mapping();
   }
 
   prepare_form_data(model) {

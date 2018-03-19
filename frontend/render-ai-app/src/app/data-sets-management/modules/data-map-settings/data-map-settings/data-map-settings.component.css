@@ -19,3 +19,7 @@
 .data_mapping_settings_list.ui-orderlist .ui-orderlist-list{
     height: calc(100vh - 405px);
 }
+
+.error_mapped_item{
+    border: 1px solid crimson;
+}
