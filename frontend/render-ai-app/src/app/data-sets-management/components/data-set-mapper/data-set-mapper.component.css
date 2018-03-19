@@ -27,6 +27,7 @@
 }
 .push_button{
     height: 90px;
+    width: 100%;
 }
 
 .load_file_block{
@@ -34,4 +35,7 @@
     height: 300px;
     margin-top: 20px;
     margin-left: 20px;
+}
+.data_mapping_list.ui-orderlist .ui-orderlist-list{
+    height: calc(100vh - 330px);
 }

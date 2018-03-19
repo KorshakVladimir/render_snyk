@@ -15,4 +15,7 @@ export class DataMapSettingsService {
   create_data_mapping(formData) {
       return this.http.post(`${this.base_url}${this.company_base}map_data_settings/`, formData);
   }
+  update_data_mapping(formData, id) {
+      return this.http.put(`${this.base_url}${this.company_base}map_data_settings/${id}/`, formData);
+  }
 }

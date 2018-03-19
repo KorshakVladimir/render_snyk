@@ -22,7 +22,7 @@
     <div class="ui-g" >
         <div class="ui-g-6 ui-g-nopad">
             <div class="ui-g-5">
-                <p-orderList [value]="origin_cols" [listStyle]="{'height':'450px'}"
+                <p-orderList [value]="origin_cols" styleClass="data_mapping_list"
                              header="Origin Data Set Columns"
                              filter="filter" filterBy="name"
                              (onSelectionChange) = "select_origin_column($event)">
@@ -34,7 +34,7 @@
                 </p-orderList>
             </div>
             <div class="ui-g-5">
-                <p-orderList [value]="new_set_columns" [listStyle]="{'height':'450px'}"  header="New Data Set Columns"
+                <p-orderList [value]="new_set_columns" styleClass="data_mapping_list"  header="New Data Set Columns"
                              filter="filter" filterBy="name"
                              (onSelectionChange) = "select_new_set_column($event)">
                     <ng-template let-item pTemplate="item">

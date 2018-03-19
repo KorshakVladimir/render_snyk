@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PapaParseService } from 'ngx-papaparse';
@@ -13,7 +13,24 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
   encapsulation: ViewEncapsulation.None
 })
 export class DataSetMapperComponent implements OnInit {
-  @Input('origin_cols') origin_cols;
+  public _origin_cols;
+  @Input('origin_cols')
+  set origin_cols(origin_cols: Array<object>) {
+    this._origin_cols =  origin_cols.sort(
+      (a: any, b: any) => {
+                    if (a.name > b.name) {
+                      return 1;
+                    }
+                    if (a.name < b.name) {
+                      return -1;
+                    }
+                    return 0;
+                  }
+      );
+  }
+  get origin_cols(): Array<object> { return this._origin_cols; }
+
+  @Output('update_data') update_data = new EventEmitter();
   public activeIndex = 0;
   public new_set_columns;
   public mapped_columns = [];
@@ -46,7 +63,17 @@ export class DataSetMapperComponent implements OnInit {
       return;
     }
     this.new_data_set = res.data;
-    this.new_set_columns = res.data[0].map(el => ({'name': el}));
+    this.new_set_columns = res.data[0].map(el => ({'name': el})).sort(
+        (a: any, b: any) => {
+          if (a.name > b.name) {
+            return 1;
+          }
+          if (a.name < b.name) {
+            return -1;
+          }
+          return 0;
+        }
+      );
   }
 
   get_files(event) {
@@ -82,6 +109,7 @@ export class DataSetMapperComponent implements OnInit {
           (res: any) => {
             this.spinnerService.hide();
             this.server_error = {};
+            this.update_data.emit();
           },
           error => {
               this.server_error = error.error;

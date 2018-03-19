@@ -19,6 +19,7 @@
                                   [style]="{minWidth: '200px'}"
                                   defaultLabel="Choose Columns"
                                   optionLabel="name"
+                                  styleClass="data_mapping_list"
                    ></p-multiSelect>
                </div>
                <div class="ui-helper-clearfix export_csv">
@@ -63,7 +64,7 @@
         </app-data-set-form>
     </p-tabPanel>
     <p-tabPanel header="Data Mapper">
-        <app-data-set-mapper [origin_cols]="cols"></app-data-set-mapper>
+        <app-data-set-mapper [origin_cols]="cols" (update_data)="get_data_set($event)"></app-data-set-mapper>
     </p-tabPanel>
 </p-tabView>
 

@@ -20,7 +20,9 @@
         </button>
     </div>
     <div class="ui-g-12">
-        <p-orderList [value]="mapped_columns" [listStyle]="{'height':'375px'}"  header="Mapped Columns"
+        <p-orderList [value]="mapped_columns"
+                     styleClass="data_mapping_settings_list"
+                     header="Mapped Columns"
                      filter="filter" filterBy="origin_column,new_set_column"
                      (onSelectionChange) = "select_primary_mapping($event)">
             <ng-template let-item let-i="index" pTemplate="item">
@@ -34,7 +36,7 @@
                             <input type="text" [(ngModel)]="item.new_set_column" placeholder="new set columns"
                                    class="mapped_list_item form-control">
                         </div>
-                        <div class="ui-g-2">
+                        <div class="ui-g-2 to-center">
                             <button type="button" pButton icon="fa-trash" iconPos="left"
                                     (click)="delete_mapping(i)">
                             </button>

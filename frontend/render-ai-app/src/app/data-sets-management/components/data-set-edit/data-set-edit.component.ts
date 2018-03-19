@@ -15,7 +15,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
   encapsulation: ViewEncapsulation.None
 })
 export class DataSetEditComponent implements OnInit {
-  public cols;
+  public cols = [];
   public scroll_height: string;
   public server_error = {};
   public model: DataSetModels = new DataSetModels(0, '', null, []);
@@ -43,9 +43,13 @@ export class DataSetEditComponent implements OnInit {
         (res: DataSetModels) => {
             this.model = res;
             this.set_data_for_table(res.data);
+            this.loading = false;
         },
-        error => error.error
+        error => {
+            this.loading = false;
+            }
         );
+    this.loading = true;
   }
   prepare_cols (data) {
     const data_cols = [];

@@ -14,3 +14,8 @@
 .text_mapped_list{
 
 }
+
+
+.data_mapping_settings_list.ui-orderlist .ui-orderlist-list{
+    height: calc(100vh - 405px);
+}
