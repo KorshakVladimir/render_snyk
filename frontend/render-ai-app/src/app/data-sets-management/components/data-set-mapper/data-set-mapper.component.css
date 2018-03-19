@@ -21,3 +21,17 @@
 .ui-steps .ui-steps-item{
     width: 50%;
 }
+.push_to_mapper{
+    margin:  0px 50%;
+    transform: translate(-50%, 200px)
+}
+.push_button{
+    height: 90px;
+}
+
+.load_file_block{
+    width: 300px;
+    height: 300px;
+    margin-top: 20px;
+    margin-left: 20px;
+}

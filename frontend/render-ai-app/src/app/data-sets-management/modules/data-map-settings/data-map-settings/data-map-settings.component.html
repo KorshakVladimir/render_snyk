@@ -1,7 +1,8 @@
 <div class="mapper_component">
     <div class="ui-g-12">
         <p-dropdown [options]="data_mapping"
-                    placeholder="Select a Data Map Settings" optionLabel="name"
+                    placeholder="Select a Data Map Settings"
+                    optionLabel="label"
                     styleClass="data_map_settings"
                     [(ngModel)]="selected_data_mapping"
                     [style]="{width:'100%'}"
@@ -10,27 +11,20 @@
         </p-dropdown>
     </div>
     <div class="ui-g-12">
-    <button type="button" pButton icon="fa-plus" iconPos="left"
-           label="Add New Elem" (click)="add_new_map_element()">
-    </button>
-    <button type="button" pButton icon="fa-plus" iconPos="left"
-           label="Save" (click)="save_map_element()">
-    </button>
+        <button type="button" pButton icon="fa-save" iconPos="left"
+               label="Save" (click)="save_map_element()" [disabled]="!primary_columns">
+        </button>
 
-    <button type="button" pButton icon="fa-plus" iconPos="left"
-           label="Save As" (click)="save_as_map_element()">
-    </button>
-
-    <button type="button" pButton icon="fa-plus" iconPos="left"
-           label="Delete" (click)="delete_map_element()">
-    </button>
+        <button type="button" pButton icon="fa-simplybuilt" iconPos="left"
+               label="Save As" (click)="save_as_map_element()" [disabled]="!primary_columns">
+        </button>
     </div>
     <div class="ui-g-12">
-        <p-orderList [value]="mapped_columns" [listStyle]="{'height':'300px'}"  header="Mapped Columns"
+        <p-orderList [value]="mapped_columns" [listStyle]="{'height':'375px'}"  header="Mapped Columns"
                      filter="filter" filterBy="origin_column,new_set_column"
                      (onSelectionChange) = "select_primary_mapping($event)">
             <ng-template let-item let-i="index" pTemplate="item">
-                <div  [ngClass]="{'ui-state-highlight' : item.origin_column==primary_columns.origin_column}">
+                <div  [ngClass]="{'ui-state-highlight' : primary_columns && item.origin_column == primary_columns.origin_column}">
                     <div class="ui-g">
                         <div class="ui-g-5">
                             <input type="text" [(ngModel)]="item.origin_column" placeholder="origin columns"
@@ -57,7 +51,7 @@
             <div ngClass="content new_company">
                 <div ngClass="content_body">
                     <app-data-mapping-form (formSubmit)="save_on_server($event)"
-                                           [model]="selected_data_mapping"
+                                           [model]="selected_data_mapping_value"
                                            [server_error]="server_error">
                     </app-data-mapping-form>
                 </div>

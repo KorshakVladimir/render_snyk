@@ -2,8 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild  } from '@ang
 import { DataMapSettingsService } from '../data-map-settings.service';
 import { DataMapModels, DataMapItem } from '../data-map-models';
 import { ViewEncapsulation } from '@angular/core';
-
-
+import {SelectItem} from 'primeng/api';
 
 @Component({
   selector: 'app-data-map-settings',
@@ -17,29 +16,30 @@ export class DataMapSettingsComponent implements OnInit {
   @Output('mapped_columnsChange') mapped_columnsChange = new EventEmitter();
   @Input('primary_columns') primary_columns;
   @Output('primary_columnsChange') primary_columnsChange = new EventEmitter();
-  public data_mapping: Array<DataMapModels>;
-  public selected_data_mapping: DataMapModels;
+  public data_mapping: SelectItem[];
+  public selected_data_mapping: SelectItem;
+  public selected_data_mapping_value: DataMapModels;
   public display = false;
   public server_error = {};
   constructor(private service: DataMapSettingsService) { }
 
   ngOnInit() {
     this.get_all_mapping_settings();
-    this.selected_data_mapping = new DataMapModels(0, '');
+    this.selected_data_mapping_value = new DataMapModels(0, '');
   }
   get_all_mapping_settings() {
     this.service.get_all_data_mapping().subscribe(
         (res: Array<DataMapModels>) => {
-            this.data_mapping = res;
+            this.data_mapping = res.map(el => ({'label': el.name, 'value': el}));
         },
         error => error.error
     );
   }
   change_data_mapping() {
-    const data = this.selected_data_mapping.data;
-    this.mapped_columns = data;
+    this.selected_data_mapping_value = this.selected_data_mapping.value;
+    this.mapped_columns = this.selected_data_mapping_value.data;
     this.mapped_columnsChange.emit(this.mapped_columns);
-    this.primary_columns = this.selected_data_mapping.primary_columns;
+    this.primary_columns = this.selected_data_mapping_value.primary_columns;
     this.primary_columnsChange.emit(this.primary_columns);
   }
   add_new_map_element() {
@@ -53,8 +53,10 @@ export class DataMapSettingsComponent implements OnInit {
     formData.append('primary_columns', JSON.stringify(this.primary_columns));
     this.service.create_data_mapping(formData).subscribe(
         (res: DataMapModels) => {
-          this.data_mapping.push(res);
-          this.selected_data_mapping = res;
+          this.selected_data_mapping_value = res;
+          const prepared_data = {'label': res.name, 'value': res};
+          this.data_mapping = [...this.data_mapping, prepared_data];
+          this.selected_data_mapping = prepared_data;
           this.primary_columns = res.primary_columns;
           this.primary_columnsChange.emit(this.primary_columns);
           this.display = false;
@@ -63,7 +65,7 @@ export class DataMapSettingsComponent implements OnInit {
     );
   }
   save_map_element() {
-    if (this.selected_data_mapping.id !== 0) {
+    if (this.selected_data_mapping_value.id !== 0) {
 
     } else {
       this.display = true;

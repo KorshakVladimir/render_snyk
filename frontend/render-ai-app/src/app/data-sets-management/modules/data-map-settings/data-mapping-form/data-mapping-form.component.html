@@ -1,4 +1,4 @@
-<form action="" ngClass="data_mapping_form" #data_mapping_form="ngForm" (ngSubmit)="handleSubmit()">
+<form *ngIf="model" action="" ngClass="data_mapping_form" #data_mapping_form="ngForm" (ngSubmit)="handleSubmit()">
     <div class="form_group">
         <label for="name">Name:</label>
         <input [(ngModel)]="model.name" name="name" id="name" required="" #name="ngModel"
