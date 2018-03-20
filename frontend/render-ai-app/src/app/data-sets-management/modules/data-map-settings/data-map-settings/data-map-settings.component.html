@@ -1,26 +1,5 @@
 <div class="mapper_component">
-    <div class="ui-g-12">
-        <div ngClass="content_title">
-            Saved data mapping entities
-        </div>
-        <p-dropdown [options]="data_mapping"
-                    placeholder="Select a Data Map Settings"
-                    optionLabel="label"
-                    styleClass="data_map_settings"
-                    [(ngModel)]="selected_data_mapping"
-                    [style]="{width:'100%'}"
-                    [filter]="true"
-                    (onChange)="change_data_mapping()">
-        </p-dropdown>
-    </div>
-    <div *ngIf="primary_columns" class="ui-g-12">
-        <button type="button" pButton icon="fa-save" iconPos="left"
-               label="Save" (click)="save_map_element()" [disabled]="check_primary_columns()">
-        </button>
-        <button type="button" pButton icon="fa-simplybuilt" iconPos="left"
-               label="Save As" (click)="save_as_map_element()" [disabled]="check_primary_columns()">
-        </button>
-    </div>
+
     <div class="ui-g-12">
         <p-orderList [value]="mapped_columns"
                      styleClass="data_mapping_settings_list"

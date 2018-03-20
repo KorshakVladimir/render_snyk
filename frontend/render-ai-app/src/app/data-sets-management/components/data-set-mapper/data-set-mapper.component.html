@@ -1,11 +1,20 @@
 <div class="ui-g" >
-    <div class="ui-g-11">
+    <div class="ui-g-6">
         <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
     </div>
+    <div class="ui-g-5 ui-g-nopad" [hidden]="activeIndex!=1">
+        <app-settings-entities [(mapped_columns)]="mapped_columns"
+                               [(primary_columns)]="primary_columns"
+                               [new_set_columns]="new_set_columns"
+                               [origin_cols]="origin_cols">
+        </app-settings-entities>
+    </div>
     <div class="ui-g-1">
-        <button pButton class="to-right push_button" [disabled]="check_push_button()"
-                label="PUSH" (click)="map_new_data_set()">
-            </button>
+        <button pButton class="to-right push_button"
+                [disabled]="check_push_button()"
+                label="PUSH"
+                (click)="map_new_data_set()">
+        </button>
     </div>
 </div>
 <p-dialog header="Data merge has the error" [(visible)]="displayError" [modal]="true" [closeOnEscape]="true"
@@ -64,12 +73,8 @@
             <app-data-map-settings
                     [(mapped_columns)]="mapped_columns"
                     [(primary_columns)]="primary_columns"
-                    [new_set_columns]="new_set_columns"
-                    [origin_cols]="origin_cols"
             >
             </app-data-map-settings>
         </div>
-        <!--<app-form-field-error [errors]="server_error" [name]='{"name": "file_to_load"}' >-->
-        <!--</app-form-field-error>-->
     </div>
 </div>

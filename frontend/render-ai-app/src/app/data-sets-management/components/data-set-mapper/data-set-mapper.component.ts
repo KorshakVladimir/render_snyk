@@ -5,7 +5,7 @@ import { PapaParseService } from 'ngx-papaparse';
 import { MenuItem } from 'primeng/api';
 import { DataRowService } from '../../data-row.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { DataMapSettingsComponent } from '../../modules/data-map-settings/data-map-settings/data-map-settings.component';
+import { SettingsEntitiesComponent } from '../../modules/data-map-settings/settings-entties/settings-entities.component';
 
 @Component({
   selector: 'app-data-set-mapper',
@@ -15,8 +15,8 @@ import { DataMapSettingsComponent } from '../../modules/data-map-settings/data-m
 })
 export class DataSetMapperComponent implements OnInit {
   public _origin_cols;
-  @ViewChild(DataMapSettingsComponent)
-  private mapping_settings: DataMapSettingsComponent;
+  @ViewChild(SettingsEntitiesComponent)
+  private mapping_settings: SettingsEntitiesComponent;
   @Input('origin_cols')
   set origin_cols(origin_cols: Array<object>) {
     this._origin_cols =  origin_cols.sort(this.sorting_mapping_list);

@@ -15,6 +15,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { DataMapSettingsService } from './data-map-settings.service';
 
 import { DataMappingFormComponent } from './data-mapping-form/data-mapping-form.component';
+import { SettingsEntitiesComponent } from './settings-entties/settings-entities.component';
 
 
 @NgModule({
@@ -31,9 +32,10 @@ import { DataMappingFormComponent } from './data-mapping-form/data-mapping-form.
   ],
   declarations: [
       DataMapSettingsComponent,
-      DataMappingFormComponent
+      DataMappingFormComponent,
+      SettingsEntitiesComponent
   ],
-  exports: [DataMapSettingsComponent],
+  exports: [DataMapSettingsComponent, SettingsEntitiesComponent],
   providers: [DataMapSettingsService]
 })
 export class DataMapSettingsModule { }

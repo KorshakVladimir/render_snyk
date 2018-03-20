@@ -1,0 +1,37 @@
+<div class="outer_block">
+    <div class="inner_block">
+        <div class="ui-g-10">
+            <h4 class="header_data_mapping">
+                Saved data mapping entities
+            </h4>
+            <p-dropdown [options]="data_mapping"
+                        placeholder="Select a Data Map Settings"
+                        optionLabel="label"
+                        styleClass="data_map_settings"
+                        [(ngModel)]="selected_data_mapping"
+                        [style]="{width:'100%'}"
+                        [filter]="true"
+                        (onChange)="change_data_mapping()">
+            </p-dropdown>
+        </div>
+        <div *ngIf="primary_columns" class="ui-g-2">
+            <button type="button"
+                    pButton icon="fa-save"
+                    iconPos="left"
+                    label="Save"
+                    (click)="save_map_element()"
+                    [disabled]="check_primary_columns()"
+                    class="map_data_buttons"
+            >
+            </button>
+            <button type="button"
+                    pButton icon="fa-simplybuilt"
+                    iconPos="left"
+                    label="Save As"
+                    (click)="save_as_map_element()"
+                    [disabled]="check_primary_columns()"
+                    class="map_data_buttons">
+            </button>
+        </div>
+    </div>
+</div>
