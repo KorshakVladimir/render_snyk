@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PapaParseService } from 'ngx-papaparse';
 import { MenuItem } from 'primeng/api';
 import { DataRowService } from '../../data-row.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { DataMapSettingsComponent } from '../../modules/data-map-settings/data-map-settings/data-map-settings.component';
 
 @Component({
   selector: 'app-data-set-mapper',
@@ -14,19 +15,11 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 })
 export class DataSetMapperComponent implements OnInit {
   public _origin_cols;
+  @ViewChild(DataMapSettingsComponent)
+  private mapping_settings: DataMapSettingsComponent;
   @Input('origin_cols')
   set origin_cols(origin_cols: Array<object>) {
-    this._origin_cols =  origin_cols.sort(
-      (a: any, b: any) => {
-                    if (a.name > b.name) {
-                      return 1;
-                    }
-                    if (a.name < b.name) {
-                      return -1;
-                    }
-                    return 0;
-                  }
-      );
+    this._origin_cols =  origin_cols.sort(this.sorting_mapping_list);
   }
   get origin_cols(): Array<object> { return this._origin_cols; }
 
@@ -43,6 +36,7 @@ export class DataSetMapperComponent implements OnInit {
   public server_error = {};
   public displayError = false;
 
+
   constructor(
       private papa: PapaParseService,
       private data_row_service: DataRowService,
@@ -58,23 +52,23 @@ export class DataSetMapperComponent implements OnInit {
       {label: 'Map Data'}
     ];
   }
+  sorting_mapping_list(a: any, b: any) {
+    if (a.name > b.name) {
+      return 1;
+    }
+    if (a.name < b.name) {
+      return -1;
+    }
+    return 0;
+  }
 
   get_new_data_set(res) {
     if (res.data.length === 0) {
       return;
     }
     this.new_data_set = res.data;
-    this.new_set_columns = res.data[0].map(el => ({'name': el})).sort(
-        (a: any, b: any) => {
-          if (a.name > b.name) {
-            return 1;
-          }
-          if (a.name < b.name) {
-            return -1;
-          }
-          return 0;
-        }
-      );
+    this.new_set_columns = res.data[0].map(el => ({'name': el})).sort(this.sorting_mapping_list);
+    setTimeout(() => this.mapping_settings.validate_mapping(), 0);
   }
 
   get_files(event) {

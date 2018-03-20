@@ -23,25 +23,32 @@
         <p-orderList [value]="mapped_columns"
                      styleClass="data_mapping_settings_list"
                      header="Origin Data Set Columns / New Data Set Columns"
-                     filter="filter" filterBy="origin_column,new_set_column"
-                     (onSelectionChange) = "select_primary_mapping($event)">
+                     filter="filter"
+                     filterBy="origin_column,new_set_column"
+                     (onSelectionChange)="select_primary_mapping($event)">
             <ng-template let-item let-i="index" pTemplate="item">
                 <div  [ngClass]="{'ui-state-highlight' : primary_columns && item.origin_column == primary_columns.origin_column}">
                     <div class="ui-g">
                         <div class="ui-g-5">
-                            <input type="text" [(ngModel)]="item.origin_column" placeholder="origin columns"
+                            <input type="text"
+                                   [(ngModel)]="item.origin_column"
+                                   placeholder="origin columns"
                                    class="mapped_list_item  form-control"
                                    [ngClass]="{'error_mapped_item': mapped_origin_error[item.origin_column]}"
                             >
                         </div>
                         <div class="ui-g-5">
-                            <input type="text" [(ngModel)]="item.new_set_column" placeholder="new set columns"
+                            <input type="text"
+                                   [(ngModel)]="item.new_set_column"
+                                   placeholder="new set columns"
                                    class="mapped_list_item form-control"
                                    [ngClass]="{'error_mapped_item': mapped_new_set_error[item.new_set_column]}"
                             >
                         </div>
                         <div class="ui-g-2 to-center">
-                            <button type="button" pButton icon="fa-trash" iconPos="left"
+                            <button type="button"
+                                    pButton icon="fa-trash"
+                                    iconPos="left"
                                     (click)="delete_mapping(i)">
                             </button>
                         </div>
@@ -49,8 +56,10 @@
                 </div>
             </ng-template>
         </p-orderList>
-        <p-dialog  [(visible)]="display" [modal]="true" [closeOnEscape]="true" styleClass="create_data_set_modal"
-                  styleClass="new_data_mapping_modal">
+        <p-dialog  [(visible)]="display"
+                   [modal]="true"
+                   [closeOnEscape]="true"
+                   styleClass="new_data_mapping_modal">
             <p-header>
                 Create new data mapping
             </p-header>

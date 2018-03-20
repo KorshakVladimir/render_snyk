@@ -55,6 +55,8 @@ export class DataMapSettingsComponent implements OnInit {
     );
   }
   validate_mapping() {
+    this.mapped_origin_error = {};
+    this.mapped_new_set_error = {};
     this.mapped_columns.forEach( el => {
       if (this.origin_cols.indexOf(el.origin_column) === -1) {
         this.mapped_origin_error[el.origin_column] = true;
