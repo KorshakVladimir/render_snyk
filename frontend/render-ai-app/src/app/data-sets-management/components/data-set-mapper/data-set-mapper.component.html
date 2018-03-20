@@ -73,7 +73,10 @@
             <app-data-map-settings
                     [(mapped_columns)]="mapped_columns"
                     [(primary_columns)]="primary_columns"
-            >
+                    [mapped_origin_error]="mapping_settings.mapped_origin_error"
+                    [mapped_new_set_error]="mapping_settings.mapped_new_set_error"
+                    (mapped_columnsChange)="mapping_settings.validate_mapping()"
+                    >
             </app-data-map-settings>
         </div>
     </div>

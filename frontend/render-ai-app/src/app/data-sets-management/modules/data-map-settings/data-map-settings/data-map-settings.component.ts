@@ -14,6 +14,8 @@ export class DataMapSettingsComponent {
   @Output('mapped_columnsChange') mapped_columnsChange = new EventEmitter();
   @Input('primary_columns') primary_columns;
   @Output('primary_columnsChange') primary_columnsChange = new EventEmitter();
+  @Input('mapped_origin_error') mapped_origin_error;
+  @Input('mapped_new_set_error') mapped_new_set_error;
 
   delete_mapping(i) {
     this.mapped_columns.splice(i, 1);

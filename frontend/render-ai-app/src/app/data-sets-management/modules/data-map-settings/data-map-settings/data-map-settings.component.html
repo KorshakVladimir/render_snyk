@@ -15,7 +15,7 @@
                                    [(ngModel)]="item.origin_column"
                                    placeholder="origin columns"
                                    class="mapped_list_item  form-control"
-                                   [ngClass]="{'error_mapped_item': mapped_origin_error[item.origin_column]}"
+                                   [ngClass]="{'error_mapped_item': mapped_origin_error.hasOwnProperty(item.origin_column) && mapped_origin_error[item.origin_column]}"
                                    [disabled]="true">
                         </div>
                         <div class="ui-g-5">
@@ -23,7 +23,7 @@
                                    [(ngModel)]="item.new_set_column"
                                    placeholder="new set columns"
                                    class="mapped_list_item form-control"
-                                   [ngClass]="{'error_mapped_item': mapped_new_set_error[item.new_set_column]}"
+                                   [ngClass]="{'error_mapped_item': mapped_new_set_error.hasOwnProperty(item.new_set_column) && mapped_new_set_error[item.new_set_column]}"
                                    [disabled]="true">
                         </div>
                         <div class="ui-g-2 to-center">
@@ -37,21 +37,5 @@
                 </div>
             </ng-template>
         </p-orderList>
-        <p-dialog  [(visible)]="display"
-                   [modal]="true"
-                   [closeOnEscape]="true"
-                   styleClass="new_data_mapping_modal">
-            <p-header>
-                Create new data mapping
-            </p-header>
-            <div ngClass="content new_company">
-                <div ngClass="content_body">
-                    <app-data-mapping-form (formSubmit)="save_on_server($event)"
-                                           [model]="selected_data_mapping_value"
-                                           [server_error]="server_error">
-                    </app-data-mapping-form>
-                </div>
-            </div>
-        </p-dialog>
     </div>
 </div>

@@ -35,3 +35,19 @@
         </div>
     </div>
 </div>
+<p-dialog  [(visible)]="display"
+           [modal]="true"
+           [closeOnEscape]="true"
+           styleClass="new_data_mapping_modal">
+    <p-header>
+        Create new data mapping
+    </p-header>
+    <div ngClass="content new_company">
+        <div ngClass="content_body">
+            <app-data-mapping-form (formSubmit)="save_on_server($event)"
+                                   [model]="selected_data_mapping_value"
+                                   [server_error]="server_error">
+            </app-data-mapping-form>
+        </div>
+    </div>
+</p-dialog>
