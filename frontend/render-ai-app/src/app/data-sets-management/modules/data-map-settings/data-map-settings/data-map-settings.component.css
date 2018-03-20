@@ -9,6 +9,7 @@
     border-bottom: 1px solid #e1e4e6;
 }
 .mapped_list_item{
+    cursor: pointer;
 }
 
 .text_mapped_list{
@@ -17,7 +18,7 @@
 
 
 .data_mapping_settings_list.ui-orderlist .ui-orderlist-list{
-    height: calc(100vh - 405px);
+    height: calc(100vh - 423px);
 }
 
 .error_mapped_item{

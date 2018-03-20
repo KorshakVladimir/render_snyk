@@ -3,13 +3,17 @@
         <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
     </div>
     <div class="ui-g-1">
-        <button pButton class="to-right push_button" [disabled]="!primary_columns"
+        <button pButton class="to-right push_button" [disabled]="check_push_button()"
                 label="PUSH" (click)="map_new_data_set()">
             </button>
     </div>
 </div>
 <p-dialog header="Data merge has the error" [(visible)]="displayError" [modal]="true" [closeOnEscape]="true"
               styleClass="error_modal">
+    <p-header>
+        Error occured while merging data
+    </p-header>
+
     <p>{{ server_error | json }}</p>
         <button pButton  label="Close" (click)="displayError=false">
         </button>

@@ -125,12 +125,16 @@ export class DataMapSettingsComponent implements OnInit {
   }
 
   delete_mapping(i) {
-    this.mapped_columns = this.mapped_columns.splice(i + 1, 1);
+    this.mapped_columns.splice(i, 1);
     this.mapped_columnsChange.emit(this.mapped_columns);
   }
 
   select_primary_mapping(event) {
     this.primary_columns = event.value[0];
     this.primary_columnsChange.emit(this.primary_columns);
+  }
+
+  check_primary_columns() {
+    return Object.keys(this.primary_columns).length === 0;
   }
 }

@@ -27,7 +27,7 @@ export class DataSetMapperComponent implements OnInit {
   public activeIndex = 0;
   public new_set_columns = [];
   public mapped_columns = [];
-  public primary_columns = [];
+  public primary_columns = {};
   public new_data_set;
   public origin_column;
   public new_set_column;
@@ -113,5 +113,10 @@ export class DataSetMapperComponent implements OnInit {
           }
       );
     this.spinnerService.show();
+  }
+  check_push_button() {
+    return Object.keys(this.primary_columns).length === 0 ||
+      Object.keys(this.mapping_settings.mapped_origin_error).length !== 0 ||
+      Object.keys(this.mapping_settings.mapped_new_set_error).length !== 0;
   }
 }

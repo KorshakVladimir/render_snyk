@@ -1,5 +1,8 @@
 <div class="mapper_component">
     <div class="ui-g-12">
+        <div ngClass="content_title">
+            Saved data mapping entities
+        </div>
         <p-dropdown [options]="data_mapping"
                     placeholder="Select a Data Map Settings"
                     optionLabel="label"
@@ -10,13 +13,12 @@
                     (onChange)="change_data_mapping()">
         </p-dropdown>
     </div>
-    <div class="ui-g-12">
+    <div *ngIf="primary_columns" class="ui-g-12">
         <button type="button" pButton icon="fa-save" iconPos="left"
-               label="Save" (click)="save_map_element()" [disabled]="!primary_columns">
+               label="Save" (click)="save_map_element()" [disabled]="check_primary_columns()">
         </button>
-
         <button type="button" pButton icon="fa-simplybuilt" iconPos="left"
-               label="Save As" (click)="save_as_map_element()" [disabled]="!primary_columns">
+               label="Save As" (click)="save_as_map_element()" [disabled]="check_primary_columns()">
         </button>
     </div>
     <div class="ui-g-12">
@@ -35,7 +37,7 @@
                                    placeholder="origin columns"
                                    class="mapped_list_item  form-control"
                                    [ngClass]="{'error_mapped_item': mapped_origin_error[item.origin_column]}"
-                            >
+                                   [disabled]="true">
                         </div>
                         <div class="ui-g-5">
                             <input type="text"
@@ -43,7 +45,7 @@
                                    placeholder="new set columns"
                                    class="mapped_list_item form-control"
                                    [ngClass]="{'error_mapped_item': mapped_new_set_error[item.new_set_column]}"
-                            >
+                                   [disabled]="true">
                         </div>
                         <div class="ui-g-2 to-center">
                             <button type="button"
