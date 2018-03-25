@@ -9,6 +9,8 @@ services:
       - ./frontend/render-ai-app/dist:/front_end
     ports:
       - "8001:8000"
+    depends_on:
+      - "web"
   db:
     image: postgres:10.2
     ports:

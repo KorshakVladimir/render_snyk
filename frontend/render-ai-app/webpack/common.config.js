@@ -293,7 +293,7 @@ module.exports = {
   "plugins": [
     new NoEmitOnErrorsPlugin(),
     new CopyWebpackPlugin([
-      {from:'src/assets',to:'assets'},
+      {from:'src/assets',to:'static/assets'},
     ], {
       "ignore": [
         ".gitkeep",

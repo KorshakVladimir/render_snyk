@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
@@ -22,7 +22,7 @@ urlpatterns = [
     path('api/ml_data/', include('ml_data_care.urls')),
     path('api/company_management/', include('company_management.urls')),
     path('api/data_mapping/', include('data_mapping_settings.urls')),
-    path('<string>', TemplateView.as_view(template_name="index.html")),
+    re_path('.*', TemplateView.as_view(template_name="index.html")),
     path('', TemplateView.as_view(template_name="index.html"))
 ]
 
