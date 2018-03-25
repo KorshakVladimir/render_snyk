@@ -10,7 +10,7 @@ export class DataRowService {
   private module_base = 'ml_data/';
 
   get_data_set(id) {
-      return this.http.get(`${this.base_url}${this.module_base}data_set/${id}`);
+      return this.http.get(`${this.base_url}${this.module_base}data_set/${id}/`);
   }
   create_data_set(formData: FormData) {
     return this.http.post(`${this.base_url}${this.module_base}data_set/0/`, formData);
