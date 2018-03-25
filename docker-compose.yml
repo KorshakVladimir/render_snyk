@@ -5,7 +5,7 @@ services:
     image: nginx:1.13
     restart: always
     volumes:
-      - ./conf:/etc/nginx/conf.d/
+      - ./conf/nginx:/etc/nginx/conf.d/
       - ./frontend/render-ai-app/dist:/front_end
     ports:
       - "8001:8000"
@@ -23,9 +23,10 @@ services:
     environment:
       - HOST_DB=db
     build: .
-    command: bash -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python3 manage.py migrate && uwsgi --plugin python --ini /conf/uwsgi.ini"
     volumes:
       - .:/code
+      - ./conf/uwsgi:/conf
     ports:
       - "8000:8000"
     depends_on:
