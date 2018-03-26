@@ -4,6 +4,7 @@
 __pycache__/
 *.py[cod]
 
+renderAI/settings/local_settings.py
 
 ### OSX ###
 .DS_Store

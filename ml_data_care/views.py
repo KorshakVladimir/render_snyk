@@ -1,9 +1,8 @@
 import csv
-
 import sys
+
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponseBadRequest
-
 from django.views import View
 from django.conf import settings
 from .models import MLData
@@ -56,10 +55,10 @@ class MLDataView(View):
         for data_set in data_sets:
             company_id = data_set[0]
             ds_name = data_set[1]
-            id = data_set[2]
+            id_data_set = data_set[2]
             tree[company_id]["children"].append({
                 "label": ds_name,
-                "data": id,
+                "data": id_data_set,
             })
 
         for tree_key, value in tree.items():

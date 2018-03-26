@@ -132,3 +132,42 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '../../media')
 
 ALLOWED_HOSTS = ['*']
+
+# not needed
+# RAVEN_CONFIG = {
+#     'dsn': 'https://3ac96c5ebd9d41dfadc9cbbfce219bc4:2efee8e1fcda4d7ba4b5ddec860caedd@sentry.io/629479',
+#     # If you are using git, you can also automatically configure the
+#     # release based on the git info.
+#     # 'release': raven.fetch_git_sha(os.path.abspath(os.path.abspath(os.pardir))),
+# }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'sentry': {
+            'level': 'ERROR',
+            'class': 'raven.handlers.logging.SentryHandler',
+            'dsn': 'https://3ac96c5ebd9d41dfadc9cbbfce219bc4:2efee8e1fcda4d7ba4b5ddec860caedd@sentry.io/629479',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'sentry'],
+            'propagate': False,
+        },
+    }
+}
