@@ -2,7 +2,7 @@ import 'rxjs/add/operator/map';
 
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler} from '@angular/core';
+import {NgModule, ErrorHandler, Provider} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -35,6 +35,11 @@ export class RavenErrorHandler implements ErrorHandler {
   }
 }
 
+const providers: Array<Provider> = [DataRowService];
+if (process.env.NODE_ENV === 'production') {
+  providers.push({ provide: ErrorHandler, useClass: RavenErrorHandler });
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +59,7 @@ export class RavenErrorHandler implements ErrorHandler {
     RoutingModule,
     Ng4LoadingSpinnerModule.forRoot()
   ],
-  providers: [DataRowService, { provide: ErrorHandler, useClass: RavenErrorHandler } ],
+  providers: providers,
   bootstrap: [AppComponent],
 })
 export class AppModule { }
