@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataRowService } from '../../data-row.service';
 import { ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { DataSetModels } from '../../data-set.models';
+import { DataSetModels, DataSetColumn } from '../../data-set.models';
 
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 
 @Component({
   selector: 'app-data-set-edit',
@@ -15,13 +16,14 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
   encapsulation: ViewEncapsulation.None
 })
 export class DataSetEditComponent implements OnInit {
-  public cols = [];
+  public cols: Array<DataSetColumn> = [];
   public scroll_height: string;
   public server_error = {};
   public model: DataSetModels = new DataSetModels(0, '', null, []);
   public data_set_id: number;
   public selectedColumns;
   public loading;
+
   constructor(
       private service: DataRowService,
       private route: ActivatedRoute,
@@ -54,7 +56,9 @@ export class DataSetEditComponent implements OnInit {
   prepare_cols (data) {
     const data_cols = [];
     if (data && data.length > 0) {
-      Object.keys(data[0]).forEach(col => data_cols.push({'name': col, 'exportable': true, 'field': col}));
+      Object.keys(data[0]).forEach(col =>
+            data_cols.push({'name': col, 'exportable': true, 'field': col, 'picked': false}
+          ));
     }
     return data_cols;
   }

@@ -1,12 +1,12 @@
 <div class="ui-g" >
-    <div class="ui-g-6">
+    <div class="ui-g-5">
         <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
     </div>
-    <div class="ui-g-5 ui-g-nopad" [hidden]="activeIndex!=1">
+    <div class="ui-g-6 ui-g-nopad" [hidden]="activeIndex!=1">
         <app-settings-entities [(mapped_columns)]="mapped_columns"
                                [(primary_columns)]="primary_columns"
                                [new_set_columns]="new_set_columns"
-                               [origin_cols]="origin_cols">
+                               [(origin_cols)]="origin_cols">
         </app-settings-entities>
     </div>
     <div class="ui-g-1">
@@ -47,7 +47,7 @@
                              (onSelectionChange) = "select_origin_column($event)">
                     <ng-template let-item pTemplate="item">
                         <div class="ui-helper-clearfix">
-                            <div>{{item.name}}</div>
+                            <div [ngClass]="{'picked' : item.picked}">{{item.name}}</div>
                         </div>
                     </ng-template>
                 </p-orderList>
@@ -64,7 +64,8 @@
                 </p-orderList>
             </div>
             <div class="ui-g-2">
-                <button pButton class="push_to_mapper" label=">>" (click)="push_to_mapped()">
+                <button pButton class="push_to_mapper" label=">>" (click)="push_to_mapped()"
+                        [disabled]="!(origin_column && new_set_column) || (origin_column && origin_column.picked)">
                 </button>
             </div>
         </div>
@@ -76,6 +77,7 @@
                     [mapped_origin_error]="mapping_settings.mapped_origin_error"
                     [mapped_new_set_error]="mapping_settings.mapped_new_set_error"
                     (mapped_columnsChange)="mapping_settings.validate_mapping()"
+                    (delete_mapped_columns)="handle_delete($event)"
                     >
             </app-data-map-settings>
         </div>

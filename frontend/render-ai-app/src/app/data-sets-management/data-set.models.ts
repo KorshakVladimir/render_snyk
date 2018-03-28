@@ -8,3 +8,10 @@ export class DataSetModels {
     public data?: Array<object>,
   ) {  }
 }
+
+export class DataSetColumn {
+  constructor(
+    public name: string,
+    public picked: boolean,
+  ) {  }
+}

@@ -6,6 +6,8 @@ import { MenuItem } from 'primeng/api';
 import { DataRowService } from '../../data-row.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { SettingsEntitiesComponent } from '../../modules/data-map-settings/settings-entties/settings-entities.component';
+import { DataSetColumn } from '../../data-set.models';
+import { DataMapSettingsService } from '../../modules/data-map-settings/data-map-settings.service';
 
 @Component({
   selector: 'app-data-set-mapper',
@@ -16,12 +18,14 @@ import { SettingsEntitiesComponent } from '../../modules/data-map-settings/setti
 export class DataSetMapperComponent implements OnInit {
   public _origin_cols;
   @ViewChild(SettingsEntitiesComponent)
-  private mapping_settings: SettingsEntitiesComponent;
+  public mapping_settings: SettingsEntitiesComponent;
   @Input('origin_cols')
-  set origin_cols(origin_cols: Array<object>) {
+  set origin_cols(origin_cols: Array<DataSetColumn>) {
     this._origin_cols =  origin_cols.sort(this.sorting_mapping_list);
+    setTimeout(() => this._origin_cols = this.map_data_service.mark_some_origin_cols(this._origin_cols, this.mapped_columns), 0);
+
   }
-  get origin_cols(): Array<object> { return this._origin_cols; }
+  get origin_cols(): Array<DataSetColumn> { return this._origin_cols; }
 
   @Output('update_data') update_data = new EventEmitter();
   public activeIndex = 0;
@@ -42,6 +46,7 @@ export class DataSetMapperComponent implements OnInit {
       private data_row_service: DataRowService,
       private route: ActivatedRoute,
       private spinnerService: Ng4LoadingSpinnerService,
+      private map_data_service: DataMapSettingsService
   ) { }
 
   items: MenuItem[];
@@ -89,6 +94,7 @@ export class DataSetMapperComponent implements OnInit {
     const origin_column = this.origin_column ? this.origin_column.name : '';
     const new_set_column = this.new_set_column ? this.new_set_column.name : '';
     this.mapped_columns.push({'origin_column': origin_column, 'new_set_column': new_set_column});
+    this.origin_column.picked = true;
   }
 
   map_new_data_set() {
@@ -118,5 +124,9 @@ export class DataSetMapperComponent implements OnInit {
     return Object.keys(this.primary_columns).length === 0 ||
       Object.keys(this.mapping_settings.mapped_origin_error).length !== 0 ||
       Object.keys(this.mapping_settings.mapped_new_set_error).length !== 0;
+  }
+  handle_delete(data) {
+    this._origin_cols.push({'name': data});
+    this._origin_cols = this._origin_cols.map(el => el.name === data ? {...el, 'picked': false} : el );
   }
 }

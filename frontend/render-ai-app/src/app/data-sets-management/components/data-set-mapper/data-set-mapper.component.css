@@ -31,7 +31,7 @@
 }
 
 .load_file_block{
-    width: 300px;
+    width: 320px;
     height: 300px;
     margin-top: 20px;
     margin-left: 20px;
@@ -41,4 +41,10 @@
 }
 .error_modal.ui-dialog{
     width: 100%;
+}
+.picked{
+    border-bottom: 1px solid #ccc;
+    background: #ccc;
+    padding: 4px;
+    border-radius: 2px;
 }

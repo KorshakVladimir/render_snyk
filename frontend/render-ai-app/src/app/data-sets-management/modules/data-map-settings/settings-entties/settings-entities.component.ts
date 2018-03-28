@@ -11,14 +11,20 @@ import { SelectItem } from 'primeng/api';
 export class SettingsEntitiesComponent implements OnInit {
   public selected_data_mapping_value: DataMapModels;
   private _origin_cols;
+  private _origin_cols_full;
   private _new_set_columns;
   @Input('origin_cols')
   set origin_cols(origin_cols) {
+    if (origin_cols === undefined) {
+      return;
+    }
+    this._origin_cols_full = origin_cols;
     this._origin_cols = origin_cols.map(el => el.name);
   }
   get origin_cols() {
     return this._origin_cols;
   }
+  @Output('origin_colsChange') origin_colsChange = new EventEmitter();
 
   @Input('new_set_columns')
   set new_set_columns(new_set_columns) {
@@ -27,6 +33,7 @@ export class SettingsEntitiesComponent implements OnInit {
   get new_set_columns() {
     return this._new_set_columns;
   }
+
   @Input('mapped_columns') mapped_columns;
   @Output('mapped_columnsChange') mapped_columnsChange = new EventEmitter();
   @Input('primary_columns') primary_columns;
@@ -39,9 +46,14 @@ export class SettingsEntitiesComponent implements OnInit {
   public mapped_origin_error = {};
   public mapped_new_set_error = {};
   constructor(private service: DataMapSettingsService) { }
+
   ngOnInit() {
     this.get_all_mapping_settings();
     this.selected_data_mapping_value = new DataMapModels(0, '');
+  }
+  mark_cols() {
+    const origin_cols = this.service.mark_some_origin_cols(this._origin_cols_full, this.mapped_columns);
+    this.origin_colsChange.emit(origin_cols);
   }
   change_data_mapping() {
     this.selected_data_mapping_value = this.selected_data_mapping.value;
@@ -50,6 +62,7 @@ export class SettingsEntitiesComponent implements OnInit {
     this.primary_columns = this.selected_data_mapping_value.primary_columns;
     this.primary_columnsChange.emit(this.primary_columns);
     this.validate_mapping();
+    this.mark_cols();
   }
 
   prepare_form_data(model) {
@@ -59,6 +72,7 @@ export class SettingsEntitiesComponent implements OnInit {
     formData.append('primary_columns', JSON.stringify(this.primary_columns));
     return formData;
   }
+
   validate_mapping() {
     this.mapped_origin_error = {};
     this.mapped_new_set_error = {};
