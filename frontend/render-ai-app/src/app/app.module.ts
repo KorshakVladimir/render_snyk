@@ -25,6 +25,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { CompanyManagementModule } from './company-management/company-management.module';
 import { DataSetsManagementModule } from './data-sets-management/data-sets-management.module';
 const Raven = require('raven-js');
+
 Raven
   .config('https://3ac96c5ebd9d41dfadc9cbbfce219bc4@sentry.io/629479')
   .install();
@@ -38,6 +39,8 @@ export class RavenErrorHandler implements ErrorHandler {
 const providers: Array<Provider> = [DataRowService];
 if (process.env.NODE_ENV === 'production') {
   providers.push({ provide: ErrorHandler, useClass: RavenErrorHandler });
+} else {
+  Raven.uninstall();
 }
 
 @NgModule({

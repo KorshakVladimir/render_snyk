@@ -8,6 +8,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { SettingsEntitiesComponent } from '../../modules/data-map-settings/settings-entties/settings-entities.component';
 import { DataSetColumn } from '../../data-set.models';
 import { DataMapSettingsService } from '../../modules/data-map-settings/data-map-settings.service';
+import { DataHelperService } from '../../data-helper.service';
 
 @Component({
   selector: 'app-data-set-mapper',
@@ -21,9 +22,11 @@ export class DataSetMapperComponent implements OnInit {
   public mapping_settings: SettingsEntitiesComponent;
   @Input('origin_cols')
   set origin_cols(origin_cols: Array<DataSetColumn>) {
-    this._origin_cols =  origin_cols.sort(this.sorting_mapping_list);
-    setTimeout(() => this._origin_cols = this.map_data_service.mark_some_origin_cols(this._origin_cols, this.mapped_columns), 0);
-
+    this._origin_cols =  origin_cols.sort(this.data_helper.sorting_mapping_list);
+    setTimeout(
+        () => this._origin_cols = this.map_data_service.mark_some_origin_cols(this._origin_cols, this.mapped_columns),
+        0
+    );
   }
   get origin_cols(): Array<DataSetColumn> { return this._origin_cols; }
 
@@ -46,7 +49,8 @@ export class DataSetMapperComponent implements OnInit {
       private data_row_service: DataRowService,
       private route: ActivatedRoute,
       private spinnerService: Ng4LoadingSpinnerService,
-      private map_data_service: DataMapSettingsService
+      private map_data_service: DataMapSettingsService,
+      private data_helper: DataHelperService
   ) { }
 
   items: MenuItem[];
@@ -57,22 +61,13 @@ export class DataSetMapperComponent implements OnInit {
       {label: 'Map Data'}
     ];
   }
-  sorting_mapping_list(a: any, b: any) {
-    if (a.name > b.name) {
-      return 1;
-    }
-    if (a.name < b.name) {
-      return -1;
-    }
-    return 0;
-  }
 
   get_new_data_set(res) {
     if (res.data.length === 0) {
       return;
     }
     this.new_data_set = res.data;
-    this.new_set_columns = res.data[0].map(el => ({'name': el})).sort(this.sorting_mapping_list);
+    this.new_set_columns = this.data_helper.get_columns_from_data_set(res);
     setTimeout(() => this.mapping_settings.validate_mapping(), 0);
   }
 

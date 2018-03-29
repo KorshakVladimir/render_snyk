@@ -69,16 +69,6 @@ class MLDataView(View):
             })
         return HttpJson(ujson.dumps(res))
 
-    def post(self, request):
-        data = request.POST.get("data")
-        data_dict = ujson.loads(data)
-        try:
-            new_row = MLData.objects.create(customer_id=data_dict["cust_ID"], data=data_dict)
-            new_row.save()
-            return HttpJson(ujson.dumps(["ok"]))
-        except Exception:
-            return HttpResponseBadRequest("Cann`t save the data: %s" % sys.exc_info()[1])
-
 
 class MLDataSetView(View):
 
@@ -87,13 +77,14 @@ class MLDataSetView(View):
         try:
             # todo: rewrite for one query
             ml_data = MLData.objects.get(id=pk)
-            context["id"] = ml_data.id
-            context["name"] = ml_data.name
-            context["company"] = {"id": ml_data.company_id, "name": ml_data.company.name}
-            context["data"] = ml_data.data
-            return HttpJson(ujson.dumps(context))
         except Exception:
             return HttpResponseBadRequest(ujson.dumps(['Data set with `pk` %d not found' % pk]))
+        context["id"] = ml_data.id
+        context["name"] = ml_data.name
+        context["company"] = {"id": ml_data.company_id, "name": ml_data.company.name}
+        context["key_data"] = {"name": ml_data.key_data}
+        context["data"] = ml_data.data
+        return HttpJson(ujson.dumps(context))
 
     @staticmethod
     def _create_update_data_set(file, req_data, pk=0):
@@ -164,7 +155,7 @@ class MLDataMapping(View):
             new_data_set_dict[x[new_set_column]] = x
 
         origin_data_set = instance.data
-
+        key_data = instance.key_data
         for row in origin_data_set:
             if origin_column not in row:
                 return HttpResponseBadRequest(ujson.dumps(['In row %s  column %s was not found' % (row, origin_column)]))
@@ -172,6 +163,8 @@ class MLDataMapping(View):
             if pk in new_data_set_dict:
                 new_data_set_row = new_data_set_dict[pk]
                 for columns in mapped_columns:
+                    if columns['origin_column'] == key_data:
+                        continue
                     if columns['origin_column'] not in row:
                         return HttpResponseBadRequest(
                             ujson.dumps(['In row %s  column %s was not found' % (row, columns['origin_column'])]))

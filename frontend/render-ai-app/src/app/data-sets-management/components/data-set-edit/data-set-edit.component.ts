@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataRowService } from '../../data-row.service';
 import { ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { DataSetModels, DataSetColumn } from '../../data-set.models';
+import {DataSetModels, DataSetColumn} from '../../data-set.models';
 
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
@@ -19,7 +19,7 @@ export class DataSetEditComponent implements OnInit {
   public cols: Array<DataSetColumn> = [];
   public scroll_height: string;
   public server_error = {};
-  public model: DataSetModels = new DataSetModels(0, '', null, []);
+  public model: DataSetModels = new DataSetModels(0, '', null, null);
   public data_set_id: number;
   public selectedColumns;
   public loading;
@@ -67,6 +67,7 @@ export class DataSetEditComponent implements OnInit {
     const formData: FormData = new FormData();
     formData.append('company', model.company.id.toString());
     formData.append('name', model.name);
+    formData.append('key_data', model.key_data.name);
     if (file) {
       formData.append('file', file, file.name);
     }
@@ -103,5 +104,16 @@ export class DataSetEditComponent implements OnInit {
           this.spinnerService.hide();
         });
     this.spinnerService.show();
+  }
+  check_for_data_key(col) {
+      if (this.model.key_data) {
+          if (col.name !== this.model.key_data.name) {
+              return false;
+          } else {
+              return true;
+          }
+      } else {
+          return false;
+      }
   }
 }

@@ -15,7 +15,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 })
 export class NewDataSetComponent implements OnInit {
   public server_error: object = {};
-  public model = new DataSetModels(0, '', null, []);
+  public model = new DataSetModels(0, '', null);
 
   constructor(
       private service: DataRowService,
@@ -31,6 +31,7 @@ export class NewDataSetComponent implements OnInit {
     const formData: FormData = new FormData();
     formData.append('company', model.company.id.toString());
     formData.append('name', model.name);
+    formData.append('key_data', model.key_data ? model.key_data.name : '');
     if (file) {
       formData.append('file', file, file.name);
     }

@@ -25,6 +25,7 @@ import { StepsModule } from 'primeng/steps';
 import { OrderListModule } from 'primeng/orderlist';
 
 import { PapaParseModule } from 'ngx-papaparse';
+import { DataHelperService } from './data-helper.service';
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import { PapaParseModule } from 'ngx-papaparse';
       DataSetMapperComponent
   ],
   providers: [
-      DataRowService
+      DataRowService,
+      DataHelperService,
   ]
 })
 export class DataSetsManagementModule { }

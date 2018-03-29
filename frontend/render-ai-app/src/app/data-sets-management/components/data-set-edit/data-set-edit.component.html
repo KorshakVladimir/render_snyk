@@ -43,10 +43,10 @@
            <ng-template pTemplate="body" let-rowData let-columns="columns">
                <tr>
                    <td *ngFor="let col of selectedColumns" pEditableColumn>
-                       <p-cellEditor>
+                       <p-cellEditor >
                            <ng-template pTemplate="input">
                                <input type="text" #cell [(ngModel)]="rowData[col.name]"
-                                      (change)="handleEdit(cell.value, col.name, rowData)" >
+                                      (change)="handleEdit(cell.value, col.name, rowData)" [disabled]="check_for_data_key(col)">
                            </ng-template>
                            <ng-template pTemplate="output">
                                {{rowData[col.name]}}
@@ -58,9 +58,11 @@
        </p-table>
     </p-tabPanel>
     <p-tabPanel header="Properties">
-        <app-data-set-form (formSubmit)="save_data_set(model)" [model]="model" [server_error]="server_error"
+        <app-data-set-form (formSubmit)="save_data_set(model)"
+                           [model]="model"
+                           [server_error]="server_error"
                            (deleteDataSet)="deleteDataSet(model)"
-        >
+                           [data_set_columns]="cols">
         </app-data-set-form>
     </p-tabPanel>
     <p-tabPanel header="Data Mapper">

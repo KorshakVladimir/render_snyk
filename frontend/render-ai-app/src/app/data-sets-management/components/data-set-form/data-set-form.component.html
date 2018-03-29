@@ -23,6 +23,7 @@
                     [style]="{width:'100%'}"
                     [filter]="true"
         ></p-dropdown>
+
         <div [hidden]="company.valid || company.pristine" class="form_error">
             Company is required
         </div>
@@ -42,6 +43,22 @@
                       #upLoader
         ></p-fileUpload>
         <app-form-field-error [errors]="server_error" [name]='{"name": "file_to_load"}' >
+        </app-form-field-error>
+    </div>
+    <div class="form_group">
+        <label for="company">Select a column with unique values:</label>
+        <p-dropdown [options]="data_set_columns"
+                    placeholder="Select column-key"
+                    optionLabel="name"
+                    styleClass="company_select"
+                    [(ngModel)]="model.key_data"
+                    name="key_data"
+                    id="key_data"
+                    #key_data="ngModel"
+                    [style]="{width:'100%'}"
+                    [filter]="true"
+        ></p-dropdown>
+        <app-form-field-error [errors]="server_error" [name]='{"name": "key_data"}' >
         </app-form-field-error>
     </div>
     <app-form-field-error [errors]="server_error" [name]='{"name": "__all__"}' >
