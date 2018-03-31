@@ -7,9 +7,9 @@ from django.views import View
 from company_management.models import Company
 from helpers.responce import HttpJson
 from . forms import NewCompanyForm
+from rest_framework.views import APIView
 
-
-class CompanyView(View):
+class CompanyView(APIView):
     @staticmethod
     def get(request, pk):
         current_company = Company.objects.filter(pk=pk)
@@ -31,7 +31,7 @@ class CompanyView(View):
     def put(request, pk):
         try:
             current_company = Company.objects.get(pk=pk)
-            current_company.name = request.PUT["name"]
+            current_company.name = request.data["name"]
             current_company.save()
         except Exception:
             return HttpResponseBadRequest("Error: %s" % sys.exc_info()[1])
