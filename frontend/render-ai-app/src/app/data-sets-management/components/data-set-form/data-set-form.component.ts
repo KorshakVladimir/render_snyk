@@ -3,7 +3,7 @@ import { Company } from '../../../company-management/company.models';
 import { ViewEncapsulation } from '@angular/core';
 import { CompanyService } from '../../../company-management/company.service';
 import { PapaParseService } from 'ngx-papaparse';
-import {DataHelperService} from '../../data-helper.service';
+import { DataHelperService } from '../../data-helper.service';
 
 @Component({
   selector: 'app-data-set-form',
