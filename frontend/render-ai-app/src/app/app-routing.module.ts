@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AddCompanyComponent } from './company-management/add-company/add-company.component';
-import { NewDataSetComponent } from './data-sets-management/components/new-data-set/new-data-set.component';
-import { DataSetEditComponent } from './data-sets-management/components/data-set-edit/data-set-edit.component';
 import { MainPageComponent } from './main-page/main-page.component';
-import { EditCompanyComponent } from './company-management/edit-company/edit-company.component';
 
 const appRoutes: Routes = [
 

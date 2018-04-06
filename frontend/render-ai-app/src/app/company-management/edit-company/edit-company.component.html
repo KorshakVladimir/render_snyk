@@ -1,8 +1,8 @@
-<div ngClass="content edit_company">
-    <div ngClass="content_title">
+<div class="content edit_company">
+    <div class="content_title">
         Edit Company
     </div>
-    <div ngClass="content_body">
+    <div class="content_body">
         <app-form-company (formSubmit)="save_changes(model)" [model]="model" [server_error]="server_error"
                           (deleteCompany)="deleteCompany(model)"
         >
