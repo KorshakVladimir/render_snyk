@@ -39,12 +39,13 @@ export class SettingsEntitiesComponent implements OnInit {
   @Input('primary_columns') primary_columns;
   @Output('primary_columnsChange') primary_columnsChange = new EventEmitter();
   public data_mapping: SelectItem[];
-  public selected_data_mapping: SelectItem;
   
+  public selected_data_mapping: SelectItem;
   public display = false;
   public server_error = {};
   public mapped_origin_error = {};
   public mapped_new_set_error = {};
+  
   constructor(private service: DataMapSettingsService) { }
 
   ngOnInit() {

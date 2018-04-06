@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <div class="ui-g-6 ui-g-nopad">
+        <div class="ui-g-6 ui-g-nopad" *ngIf="mapping_settings">
             <app-data-map-settings
                     [(mapped_columns)]="mapped_columns"
                     [(primary_columns)]="primary_columns"
