@@ -76,14 +76,15 @@ class MLDataSetView(View):
         context = {}
         try:
             # todo: rewrite for one query
-            ml_data = MLData.objects.get(id=pk)
+            ml_data_q = MLData.objects.filter(id=pk).values("id", "name", "company_id", "company__name", "key_data", "data")
+            ml_data = ml_data_q[0]
         except Exception:
             return HttpResponseBadRequest(ujson.dumps(['Data set with `pk` %d not found' % pk]))
-        context["id"] = ml_data.id
-        context["name"] = ml_data.name
-        context["company"] = {"id": ml_data.company_id, "name": ml_data.company.name}
-        context["key_data"] = {"name": ml_data.key_data}
-        context["data"] = ml_data.data
+        context["id"] = ml_data["id"]
+        context["name"] = ml_data["name"]
+        context["company"] = {"id": ml_data["company_id"], "name": ml_data["company__name"]}
+        context["key_data"] = {"name": ml_data["key_data"]}
+        context["data"] = ml_data["data"]
         return HttpJson(ujson.dumps(context))
 
     @staticmethod
