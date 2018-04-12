@@ -76,7 +76,8 @@ class MLDataSetView(View):
         context = {}
         try:
             # todo: rewrite for one query
-            ml_data_q = MLData.objects.filter(id=pk).values("id", "name", "company_id", "company__name", "key_data", "data")
+            ml_data_q = MLData.objects.filter(id=pk).values("id", "name", "company_id", "company__name", "key_data",
+                                                            "data")
             ml_data = ml_data_q[0]
         except Exception:
             return HttpResponseBadRequest(ujson.dumps(['Data set with `pk` %d not found' % pk]))

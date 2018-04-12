@@ -30,4 +30,7 @@ export class DataMapSettingsService {
     });
     return origin_cols_t;
   }
+  delete_data_mapping(id) {
+      return this.http.delete(`${this.base_url}${this.company_base}map_data_settings/${id}/`);
+  }
 }

@@ -46,3 +46,8 @@ class DataMappingDetailSettings(DataMappingBase):
         data = request.PUT
         form = DataMappingForm(data, instance=instance)
         return self.save_form(form, data)
+
+    def delete(self, request, pk):
+        MapSettings.objects.filter(pk=pk).delete()
+        return HttpJson(ujson.dumps(["ok"]))
+

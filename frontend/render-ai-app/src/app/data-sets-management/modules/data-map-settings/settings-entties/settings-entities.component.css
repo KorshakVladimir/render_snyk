@@ -2,15 +2,30 @@
     width: 100%;
     margin-top: 2px;
 }
+
 .outer_block{
     padding-top: 8px;
     padding-bottom: 8px;
     height: 100%;
 }
+
 .header_data_mapping{
     line-height: 6px;
     margin-top: 11px;
     margin-bottom: 25px;
     text-align: left;
     color: #666a6b;
+}
+
+.mapping_element{
+    display: inline-block;
+    height: 34px;
+    padding-top: 6px;
+}
+
+.mapping_delete_button{
+    margin-right: 5px;
+    position: absolute;
+    right: 0px;
+    margin-top: -18px;
 }

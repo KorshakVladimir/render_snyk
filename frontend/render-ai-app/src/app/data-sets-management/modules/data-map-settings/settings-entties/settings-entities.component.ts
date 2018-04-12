@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import { DataMapModels } from '../data-map-models';
 import { DataMapSettingsService } from '../data-map-settings.service';
 import { SelectItem } from 'primeng/api';
@@ -6,7 +6,8 @@ import { SelectItem } from 'primeng/api';
 @Component({
   selector: 'app-settings-entities',
   templateUrl: './settings-entities.component.html',
-  styleUrls: ['./settings-entities.component.css']
+  styleUrls: ['./settings-entities.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class SettingsEntitiesComponent implements OnInit {
   public selected_data_mapping_value: DataMapModels;
@@ -138,5 +139,16 @@ export class SettingsEntitiesComponent implements OnInit {
   
   check_primary_columns() {
     return Object.keys(this.primary_columns).length === 0;
+  }
+
+  delete_data_mapping(event, item) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.data_mapping = this.data_mapping.filter(el =>  el.label !== item.label);
+    this.service.delete_data_mapping(item.value.id).subscribe(
+      (res) => {
+      },
+      error => this.server_error = error.error
+    );
   }
 }

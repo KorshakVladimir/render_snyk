@@ -12,6 +12,12 @@
                         [style]="{width:'100%'}"
                         [filter]="true"
                         (onChange)="change_data_mapping()">
+                <ng-template let-item pTemplate="item">
+                    <div class="mapping_element">{{item.label}}</div>
+                    <div class="to-right">
+                        <p-button (onClick)="delete_data_mapping($event, item.value)" icon="fa fa-fw fa-trash"></p-button>
+                    </div>
+                </ng-template>
             </p-dropdown>
         </div>
         <div *ngIf="primary_columns" class="ui-g-3">
